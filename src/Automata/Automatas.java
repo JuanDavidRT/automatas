@@ -18,8 +18,7 @@ public class Automatas {
         // TODO code application logic here
         
         
-        String str = "Hola Mundo";
-        System.out.println(str);
+       
         
     }
     
