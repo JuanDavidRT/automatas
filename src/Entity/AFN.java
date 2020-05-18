@@ -11,4 +11,9 @@ package Entity;
  */
 public class AFN {
     
+    public String Sigma[];
+    public String States[];
+    public String InitialState[];  
+    public String AcceptanceState[];    
+    public String Transition[][];
 }

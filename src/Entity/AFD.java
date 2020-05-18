@@ -9,6 +9,12 @@ package Entity;
  *
  * @author leons
  */
-public class AFD {
+public class AFD {  
+    
+    public String Sigma[];
+    public String States[];
+    public String InitialState[];  
+    public String AcceptanceState[];    
+    public String Transition[][];
     
 }
