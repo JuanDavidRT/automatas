@@ -86,9 +86,9 @@ public class AFDController {
             if(buffer.equals(afd.States[i])){               //si el estado actual buffer es igual a un estado en el automata ocntinua
                 
                 for(int j=0; j<afd.Sigma.length; j++){      //loop para el alfabeto
-                    if(read==afd.Sigma[j]){                 //si el caracter es igual a la posicioòn de sigma entra, 
-                        bufferResult =transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columa son los estados
-                                                            //y la segunda columna los posibles caracteres
+                    if(read==afd.Sigma[j]){                 //si el caracter es igual a la posición de sigma entra, 
+                        bufferResult =transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
+                                                            //y la segunda columna el alfabeto
                     }
                 }           
             }
