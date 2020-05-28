@@ -45,16 +45,16 @@ public class AFDController {
     }
     
     public boolean procesarCadena(){
-        String cadena= "abababa";
+        String cadena= "ababab";
         String buffer=afd.InitialState;
         boolean result = false;
-        for(int i=0;i<cadena.length();i++){
+        for(int i=0;i<cadena.length();i++){  //un loop para leer la cadena de entrada
             char read=cadena.charAt(i);
-            buffer=procesarTransicion(afd.Transition, buffer, read);
-            result=false;
+            buffer=procesarTransicion(afd.Transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            result=false;           //reinicializo en false para cada iteración
             for(int j=0;j<afd.AcceptanceState.length;j++){
                 if(buffer.equals(afd.AcceptanceState[j])){
-                    result=true;
+                    result=true;                                // dice si es aceptado o no
                 }
             }            
         }
@@ -65,14 +65,13 @@ public class AFDController {
     public String procesarTransicion(String[][] transicion, String buffer, char read)
     {
         String bufferResult=new String();
-        for(int i=0;i<afd.States.length;i++){
-            if(buffer.equals(afd.States[i])){
+        for(int i=0;i<afd.States.length;i++){               //un loop para la cantidad de estados
+            if(buffer.equals(afd.States[i])){               //si el estado actual buffer es igual a un estado en el automata ocntinua
                 
-                for(int j=0; j<afd.Sigma.length; j++){
-                    if(read==afd.Sigma[j]){
-                        
-                       bufferResult =transicion[i][j];    
-                        break;
+                for(int j=0; j<afd.Sigma.length; j++){      //loop para el alfabeto
+                    if(read==afd.Sigma[j]){                 //si el caracter es igual a la posicioòn de sigma entra, 
+                        bufferResult =transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columa son los estados
+                                                            //y la segunda columna los posibles caracteres
                     }
                 }           
             }
