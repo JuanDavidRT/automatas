@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 package Automata;
+import Controller.AFDController;
 
 /**
  *
@@ -11,15 +14,25 @@ package Automata;
  */
 public class Automatas {
 
+    public static AFDController afdController;
     /**
      * @param args the command line arguments
      */
+    public Automatas(){
+        
+    }
+    
     public static void main(String[] args) {
         // TODO code application logic here
+        afdController= new AFDController();
         
-        
-       
-        
+       boolean result= afdController.procesarCadena();
+        if(result){
+            System.out.println("La cadena es aceptada");
+        }
+        else{
+            System.out.println("La cadena NO es aceptada");
+        }
     }
     
 }
