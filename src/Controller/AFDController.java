@@ -6,6 +6,11 @@
 package Controller;
 
 import Entity.AFD;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,6 +19,8 @@ import Entity.AFD;
 public class AFDController {
      AFD afd;
     
+     
+     
     public AFDController(){
     afd=new AFD();
     afd.Sigma=new char[10];
@@ -24,7 +31,7 @@ public class AFDController {
     
     
     afd.Sigma[0]='a';
-    afd.Sigma[1]='b';
+     afd.Sigma[1]='b';
     afd.InitialState="q0";
     afd.AcceptanceState[0]="q0";
     afd.AcceptanceState[1]="q2";
@@ -113,4 +120,107 @@ public class AFDController {
         System.out.println("En el estado " +buffer+" Lee "+ read + " y pasa al estado " + bufferResult);
         return bufferResult;
     }
-}
+    public void leerArchivo(){
+                
+        
+      File archivo = null;
+      FileReader fr = null;
+      BufferedReader br = null;
+      
+    
+      List<String> lista = new ArrayList<>();
+      try {
+         // Apertura del fichero y creacion de BufferedReader para poder
+         // hacer una lectura comoda (disponer del metodo readLine()).
+         archivo = new File ("C:\\Universidad\\nose.txt");
+         fr = new FileReader (archivo);
+         br = new BufferedReader(fr);
+         
+        
+         // Lectura del fichero
+         String linea;
+         
+         while((linea=br.readLine())!=null){
+            System.out.println(linea);
+            lista.add(linea); // añade archivo a la lista 
+         }
+            
+           
+      }
+      catch(Exception e){
+         e.printStackTrace();
+      }finally{
+         // En el finally cerramos el fichero, para asegurarnos
+         // que se cierra tanto si todo va bien como si salta 
+         // una excepcion.
+         try{                    
+            if( null != fr ){   
+               fr.close();     
+            }                  
+         }catch (Exception e2){ 
+            e2.printStackTrace();
+         }
+      }
+      
+      
+       for (int i = 0; i < lista.size(); i++) {
+           
+           if(i==0){
+               if(lista.get(0).equals("#!dfa")){
+                   System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");/// crea un objeto AFD
+               }else if(lista.get(0).equals("#!nfa")){
+                   System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); /// crea un objeto AFN
+               }else if (lista.get(0).equals("#!nfe")) {
+                   System.out.println("-----AUTOMATA FINITO NO DETERMINISTA CON TRANSICIONES LAMBDA------");   // crea objeto AFN lambda 
+               }else{
+                   System.out.println("----NO HA ESCRITO EL TIPO DE AUTOMATA------- ");
+                   
+                 
+                   
+               }
+           }
+           if(lista.get(i).equals("#alphabet")){
+               while(!lista.get(i+1).equals("#states")&& i<=lista.size()){
+                   System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
+                   
+                   i++;
+               }
+               
+           }
+           if(lista.get(i).equals("#states")){
+               while(!lista.get(i+1).equals("#initial")&& i<=lista.size()){
+                   System.out.println("busco estados "); // agregar alfabeto e identicar intervalo de alfabeto
+                   
+                   i++;
+               }
+           }
+           if(lista.get(i).equals("#initial")){
+               while(!lista.get(i+1).equals("#accepting")&& i<=lista.size()){
+                   System.out.println("busco ini"); // agregar estado inicial del automata
+                   
+                   i++;
+               }
+           }
+           if(lista.get(i).equals("#accepting")){
+               while(!lista.get(i+1).equals("#transitions")&& i<=lista.size()){
+                   System.out.println("leo acept"); // agregar estado inicial del automata
+                   
+                   i++;
+               }
+           
+
+           } 
+           if(lista.get(i).equals("#transitions")){
+               while(!lista.get(i+1).equals("")&& i<=lista.size()){
+                   System.out.println("leo trans "); // agregar estado inicial del automata
+                   
+                   i++;
+               }
+           
+
+           } 
+           
+           
+        }
+       }
+    }

@@ -6,7 +6,14 @@
 package Automata;
 
 import Controller.AFDController;
+import Entity.AFD;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -26,7 +33,86 @@ public class Automatas {
 
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        
+      File archivo = null;
+      FileReader fr = null;
+      BufferedReader br = null;
+      
+    
+      List<String> lista = new ArrayList<>();
+      try {
+         // Apertura del fichero y creacion de BufferedReader para poder
+         // hacer una lectura comoda (disponer del metodo readLine()).
+         archivo = new File ("C:\\Universidad\\nose.txt");
+         fr = new FileReader (archivo);
+         br = new BufferedReader(fr);
+         
+        
+         // Lectura del fichero
+         String linea;
+         
+         while((linea=br.readLine())!=null){
+            System.out.println(linea);
+            lista.add(linea); // añade archivo a la lista 
+         }
+            
+           
+      }
+      catch(Exception e){
+         e.printStackTrace();
+      }finally{
+         // En el finally cerramos el fichero, para asegurarnos
+         // que se cierra tanto si todo va bien como si salta 
+         // una excepcion.
+         try{                    
+            if( null != fr ){   
+               fr.close();     
+            }                  
+         }catch (Exception e2){ 
+            e2.printStackTrace();
+         }
+      }
+      
+      
+       for (int i = 0; i < lista.size(); i++) {
+           
+           if(i==0){
+               if(lista.get(0).equals("#!dfa")){
+                   System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");/// crea un objeto AFD
+               }else if(lista.get(0).equals("#!nfa")){
+                   System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); /// crea un objeto AFN
+               }else if (lista.get(0).equals("#!nfe")) {
+                   System.out.println("-----AUTOMATA FINITO NO DETERMINISTA CON TRANSICIONES LAMBDA------");   // crea objeto AFN lambda 
+               }else{
+                   System.out.println("----NO HA ESCRITO EL TIPO DE AUTOMATA------- ");
+                   
+                 
+                   
+               }
+           }
+           if(lista.get(i).equals("#alphabet")){
+               while(!lista.get(i+1).equals("#states")){
+                   System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
+                   
+                   i++;
+               }
+               
+           }
+           if(lista.get(i).equals("states")){
+               while(!lista.get(i+1).equals("#initial")){
+                   System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
+                   
+                   i++;
+               }
+           }
+           
+
+           
+       }
+        
         afdController = new AFDController();
+        AFD pepito = new AFD();
 
         Scanner sn = new Scanner(System.in);
         int option, optionIn;
