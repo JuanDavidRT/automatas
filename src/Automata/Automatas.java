@@ -156,6 +156,10 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
+                                 case 3:
+                                result = afdController.procesarListaDeCadenas();
+                                
+                                break;
                         }
                         break;
                     case 2:
