@@ -23,18 +23,20 @@ public class AFDController {
     public AFDController() {
         afd = new AFD();
         afd.Sigma = new char[10];
-        afd.States = new String[3];
+        afd.States = new ArrayList<>();
         afd.InitialState = new String();
-        afd.AcceptanceState = new String[3];
+        afd.AcceptanceState = new ArrayList<>();
         afd.Transition = new String[3][2];
+        
+        List<String> lista = new ArrayList<>();
 
         afd.Sigma[0] = 'a';
         afd.Sigma[1] = 'b';
         afd.InitialState = "q0";
-        afd.AcceptanceState[0] = "q0";
-        afd.AcceptanceState[1] = "q2";
-        for (int i = 0; i < 3; i++) {
-            afd.States[i] = "q" + i;
+        afd.AcceptanceState.add("q0");
+        afd.AcceptanceState.add("q2");
+        /*for (int i = 0; i < 3; i++) {
+            afd.States.add ( "q" + i);
         }
 
         afd.Transition[0][0] = "q0";
@@ -42,81 +44,11 @@ public class AFDController {
         afd.Transition[1][0] = "q1";
         afd.Transition[1][1] = "q2";
         afd.Transition[2][0] = "q1";
-        afd.Transition[2][1] = "q1";
+        afd.Transition[2][1] = "q1";*/
 
     }
-
-    public boolean procesarCadena() {
-        String cadena = "ababab";
-        String buffer = afd.InitialState;
-        boolean result = false;
-        for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
-            char read = cadena.charAt(i);
-            buffer = procesarTransicion(afd.Transition, buffer, read);//procesa el caracter que está en la posicion de i del string
-            result = false;           //reinicializo en false para cada iteración
-            for (int j = 0; j < afd.AcceptanceState.length; j++) {
-                if (buffer.equals(afd.AcceptanceState[j])) {
-                    result = true;                                // dice si es aceptado o no
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public boolean procesarCadenaConDetalle() {
-        String cadena = "ababab";
-        String buffer = afd.InitialState;
-        boolean result = false;
-        for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
-            char read = cadena.charAt(i);
-            buffer = procesarTransicionConDetalle(afd.Transition, buffer, read);//procesa el caracter que está en la posicion de i del string
-            result = false;           //reinicializo en false para cada iteración
-            for (int j = 0; j < afd.AcceptanceState.length; j++) {
-                if (buffer.equals(afd.AcceptanceState[j])) {
-                    result = true;                                // dice si es aceptado o no
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public String procesarTransicion(String[][] transicion, String buffer, char read) {
-        String bufferResult = new String();
-        for (int i = 0; i < afd.States.length; i++) {               //un loop para la cantidad de estados
-            if (buffer.equals(afd.States[i])) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
-
-                for (int j = 0; j < afd.Sigma.length; j++) {      //loop para el alfabeto
-                    if (read == afd.Sigma[j]) {                 //si el caracter es igual a la posición de sigma entra, 
-                        bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
-                        //y la segunda columna el alfabeto
-                    }
-                }
-            }
-        }
-
-        return bufferResult;
-    }
-
-    public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
-        String bufferResult = new String();
-        for (int i = 0; i < afd.States.length; i++) {               //un loop para la cantidad de estados
-            if (buffer.equals(afd.States[i])) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
-
-                for (int j = 0; j < afd.Sigma.length; j++) {      //loop para el alfabeto
-                    if (read == afd.Sigma[j]) {                 //si el caracter es igual a la posicioòn de sigma entra, 
-                        bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columa son los estados
-                        //y la segunda columna los posibles caracteres
-                    }
-                }
-            }
-        }
-        System.out.println("En el estado " + buffer + " Lee " + read + " y pasa al estado " + bufferResult);
-        return bufferResult;
-    }
-
-    public void leerArchivo() {
+    
+        public void leerArchivo() {
 
         File archivo = null;
         FileReader fr = null;
@@ -178,27 +110,28 @@ public class AFDController {
             if (lista.get(i).equals("#states")) {
                 while (!lista.get(i + 1).equals("#initial") && i <= lista.size()) {
                     System.out.println("busco estados "); // agregar alfabeto e identicar intervalo de alfabeto
-
+                    afd.States.add(lista.get(i+1));
                     i++;
                 }
             }
             if (lista.get(i).equals("#initial")) {
                 while (!lista.get(i + 1).equals("#accepting") && i <= lista.size()) {
                     System.out.println("busco ini"); // agregar estado inicial del automata
-
+                    afd.InitialState=lista.get(i+1);
                     i++;
                 }
             }
             if (lista.get(i).equals("#accepting")) {
                 while (!lista.get(i + 1).equals("#transitions") && i <= lista.size()) {
                     System.out.println("leo acept"); // agregar estado inicial del automata
+                    afd.AcceptanceState.add(lista.get(i+1));
 
                     i++;
                 }
 
             }
             if (lista.get(i).equals("#transitions")) {
-                while (!lista.get(i + 1).equals("") && i <= lista.size()) {
+                while (i<lista.size()) {
                     System.out.println("leo trans "); // agregar estado inicial del automata
 
                     i++;
@@ -208,6 +141,79 @@ public class AFDController {
 
         }
     }
+
+        
+    public boolean procesarCadena() {
+        String cadena = "ababab";
+        String buffer = afd.InitialState;
+        boolean result = false;
+        for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
+            char read = cadena.charAt(i);
+            buffer = procesarTransicion(afd.Transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            result = false;           //reinicializo en false para cada iteración
+            for (int j = 0; j < afd.AcceptanceState.size(); j++) {
+                if (buffer.equals(afd.AcceptanceState.get(j))) {
+                    result = true;                                // dice si es aceptado o no
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public boolean procesarCadenaConDetalle() {
+        String cadena = "ababab";
+        String buffer = afd.InitialState;
+        boolean result = false;
+        for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
+            char read = cadena.charAt(i);
+            buffer = procesarTransicionConDetalle(afd.Transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            result = false;           //reinicializo en false para cada iteración
+            for (int j = 0; j < afd.AcceptanceState.size(); j++) {
+                if (buffer.equals(afd.AcceptanceState.get(j))) {
+                    result = true;                                // dice si es aceptado o no
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public String procesarTransicion(String[][] transicion, String buffer, char read) {
+        String bufferResult = new String();
+        for (int i = 0; i < afd.States.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(afd.States.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
+
+                for (int j = 0; j < afd.Sigma.length; j++) {      //loop para el alfabeto
+                    if (read == afd.Sigma[j]) {                 //si el caracter es igual a la posición de sigma entra, 
+                        bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
+                        //y la segunda columna el alfabeto
+                    }
+                }
+            }
+        }
+
+        return bufferResult;
+    }
+
+    public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
+        String bufferResult = new String();
+        for (int i = 0; i < afd.States.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(afd.States.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
+
+                for (int j = 0; j < afd.Sigma.length; j++) {      //loop para el alfabeto
+                    if (read == afd.Sigma[j]) {                 //si el caracter es igual a la posicioòn de sigma entra, 
+                        bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columa son los estados
+                        //y la segunda columna los posibles caracteres
+                    }
+                }
+            }
+        }
+        System.out.println("En el estado " + buffer + " Lee " + read + " y pasa al estado " + bufferResult);
+        return bufferResult;
+    }
+
+
 
     public boolean procesarListaDeCadenas() {
         String Lista[] = new String[5];
@@ -226,8 +232,8 @@ public class AFDController {
                 char read = cadena.charAt(j);
                 buffer = procesarTransicionConDetalle(afd.Transition, buffer, read);//procesa el caracter que está en la posicion de i del string
                 result = false;           //reinicializo en false para cada iteración
-                for (int k = 0; k < afd.AcceptanceState.length; k++) {
-                    if (buffer.equals(afd.AcceptanceState[k])) {
+                for (int k = 0; k < afd.AcceptanceState.size(); k++) {
+                    if (buffer.equals(afd.AcceptanceState.get(k))) {
                         result = true;                                // dice si es aceptado o no
                     }
                 }

@@ -5,6 +5,9 @@
  */
 package Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author leons
@@ -14,9 +17,10 @@ public class AFD {
     
     
     public char Sigma[];
-    public String States[];
+    public List<String> States;
     public String InitialState;  
-    public String AcceptanceState[];    
+    public List<String>  AcceptanceState;    
     public String Transition[][];
+    
     
 }
