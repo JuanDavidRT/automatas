@@ -16,11 +16,11 @@ public class AFD {
     
     
     
-    public char Sigma[];
-    public List<String> States;
-    public String InitialState;  
-    public List<String>  AcceptanceState;    
-    public String Transition[][];
+    public char[] sigma;
+    public List<String> states;
+    public String initialState;  
+    public List<String>  acceptanceStates;    
+    public String[][] transition;
     
     
 }
