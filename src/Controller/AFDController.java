@@ -19,6 +19,9 @@ import java.util.List;
 public class AFDController {
 
     AFD afd;
+    int countf=0;
+    int contc=0;
+    List<String> lineasArchivo = new ArrayList<>();
 
     public AFDController() {
         afd = new AFD();
@@ -28,33 +31,33 @@ public class AFDController {
         afd.AcceptanceState = new ArrayList<>();
         afd.Transition = new String[3][2];
         
-        List<String> lista = new ArrayList<>();
+       
 
         afd.Sigma[0] = 'a';
         afd.Sigma[1] = 'b';
-        afd.InitialState = "q0";
-        afd.AcceptanceState.add("q0");
+        //afd.InitialState = "q0";
+        /*afd.AcceptanceState.add("q0");
         afd.AcceptanceState.add("q2");
         /*for (int i = 0; i < 3; i++) {
             afd.States.add ( "q" + i);
-        }
+        }*/
 
         afd.Transition[0][0] = "q0";
         afd.Transition[0][1] = "q1";
         afd.Transition[1][0] = "q1";
         afd.Transition[1][1] = "q2";
         afd.Transition[2][0] = "q1";
-        afd.Transition[2][1] = "q1";*/
+        afd.Transition[2][1] = "q1";
 
     }
-    
+     /// metodo para leer archivo y capturar variables
         public void leerArchivo() {
 
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
 
-        List<String> lista = new ArrayList<>();
+        
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
@@ -67,7 +70,7 @@ public class AFDController {
 
             while ((linea = br.readLine()) != null) {
                 System.out.println(linea);
-                lista.add(linea); // añade archivo a la lista 
+                lineasArchivo.add(linea); // añade archivo a la lista 
             }
 
         } catch (Exception e) {
@@ -84,54 +87,55 @@ public class AFDController {
                 e2.printStackTrace();
             }
         }
-
-        for (int i = 0; i < lista.size(); i++) {
+       
+        //Se lee las lineas del archivo y se extraen los datos
+        for (int i = 0; i < lineasArchivo.size(); i++) {
 
             if (i == 0) {
-                if (lista.get(0).equals("#!dfa")) {
+                if (lineasArchivo.get(0).equals("#!dfa")) {
                     System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");/// crea un objeto AFD
-                } else if (lista.get(0).equals("#!nfa")) {
+                } else if (lineasArchivo.get(0).equals("#!nfa")) {
                     System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); /// crea un objeto AFN
-                } else if (lista.get(0).equals("#!nfe")) {
+                } else if (lineasArchivo.get(0).equals("#!nfe")) {
                     System.out.println("-----AUTOMATA FINITO NO DETERMINISTA CON TRANSICIONES LAMBDA------");   // crea objeto AFN lambda 
                 } else {
                     System.out.println("----NO HA ESCRITO EL TIPO DE AUTOMATA------- ");
 
                 }
             }
-            if (lista.get(i).equals("#alphabet")) {
-                while (!lista.get(i + 1).equals("#states") && i <= lista.size()) {
+            if (lineasArchivo.get(i).equals("#alphabet")) {
+                while (!lineasArchivo.get(i + 1).equals("#states") && i <= lineasArchivo.size()) {
                     System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
 
                     i++;
                 }
 
             }
-            if (lista.get(i).equals("#states")) {
-                while (!lista.get(i + 1).equals("#initial") && i <= lista.size()) {
+            if (lineasArchivo.get(i).equals("#states")) {
+                while (!lineasArchivo.get(i + 1).equals("#initial") && i <= lineasArchivo.size()) {
                     System.out.println("busco estados "); // agregar alfabeto e identicar intervalo de alfabeto
-                    afd.States.add(lista.get(i+1));
+                    afd.States.add(lineasArchivo.get(i+1));
                     i++;
                 }
             }
-            if (lista.get(i).equals("#initial")) {
-                while (!lista.get(i + 1).equals("#accepting") && i <= lista.size()) {
+            if (lineasArchivo.get(i).equals("#initial")) {
+                while (!lineasArchivo.get(i + 1).equals("#accepting") && i <= lineasArchivo.size()) {
                     System.out.println("busco ini"); // agregar estado inicial del automata
-                    afd.InitialState=lista.get(i+1);
+                    afd.InitialState=lineasArchivo.get(i+1);
                     i++;
                 }
             }
-            if (lista.get(i).equals("#accepting")) {
-                while (!lista.get(i + 1).equals("#transitions") && i <= lista.size()) {
+            if (lineasArchivo.get(i).equals("#accepting")) {
+                while (!lineasArchivo.get(i + 1).equals("#transitions") && i <= lineasArchivo.size()) {
                     System.out.println("leo acept"); // agregar estado inicial del automata
-                    afd.AcceptanceState.add(lista.get(i+1));
+                    afd.AcceptanceState.add(lineasArchivo.get(i+1));
 
                     i++;
                 }
 
             }
-            if (lista.get(i).equals("#transitions")) {
-                while (i<lista.size()) {
+            if (lineasArchivo.get(i).equals("#transitions")) {
+                while (i<lineasArchivo.size()) {
                     System.out.println("leo trans "); // agregar estado inicial del automata
 
                     i++;
@@ -140,6 +144,7 @@ public class AFDController {
             }
 
         }
+            
     }
 
         
