@@ -16,7 +16,7 @@ public class AFD {
     
     
     
-    public char[] sigma;
+    public List<Character> sigma;
     public List<String> states;
     public String initialState;  
     public List<String>  acceptanceStates;    

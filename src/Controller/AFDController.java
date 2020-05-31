@@ -25,7 +25,7 @@ public class AFDController {
 
     public AFDController() {
         afd = new AFD();
-        afd.sigma = new char[10];
+        afd.sigma = new ArrayList<>();
         afd.states = new ArrayList<>();
         afd.initialState = new String();
         afd.acceptanceStates = new ArrayList<>();
@@ -33,14 +33,15 @@ public class AFDController {
         
        
 
-        afd.sigma[0] = 'a';
-        afd.sigma[1] = 'b';
-        //afd.InitialState = "q0";
-        /*afd.AcceptanceState.add("q0");
-        afd.AcceptanceState.add("q2");
-        /*for (int i = 0; i < 3; i++) {
-            afd.States.add ( "q" + i);
-        }*/
+        afd.sigma.add('a');
+        afd.sigma.add('b');
+        afd.initialState = "q0";
+        afd.acceptanceStates.add("q0");
+        afd.acceptanceStates.add("q2");
+        
+        for (int i = 0; i < 3; i++) {
+            afd.states.add ( "q" + i);
+        }
 
         afd.transition[0][0] = "q0";
         afd.transition[0][1] = "q1";
@@ -189,8 +190,8 @@ public class AFDController {
         for (int i = 0; i < afd.states.size(); i++) {               //un loop para la cantidad de estados
             if (buffer.equals(afd.states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
 
-                for (int j = 0; j < afd.sigma.length; j++) {      //loop para el alfabeto
-                    if (read == afd.sigma[j]) {                 //si el caracter es igual a la posición de sigma entra, 
+                for (int j = 0; j < afd.sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == afd.sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
                         bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
                         //y la segunda columna el alfabeto
                     }
@@ -204,10 +205,9 @@ public class AFDController {
     public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
         String bufferResult = new String();
         for (int i = 0; i < afd.states.size(); i++) {               //un loop para la cantidad de estados
-            if (buffer.equals(afd.states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
-
-                for (int j = 0; j < afd.sigma.length; j++) {      //loop para el alfabeto
-                    if (read == afd.sigma[j]) {                 //si el caracter es igual a la posicioòn de sigma entra, 
+            if (buffer.equals(afd.states.get(i))) {              //si el estado actual buffer es igual a un estado en el automata ocntinua
+                for (int j = 0; j < afd.sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == afd.sigma.get(j)) {                 //si el caracter es igual a la posicioòn de sigma entra, 
                         bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columa son los estados
                         //y la segunda columna los posibles caracteres
                     }
@@ -257,4 +257,42 @@ public class AFDController {
 
         return result;
     }
+
+    
+     public void generarSigma(){
+        String alfabetoA="a,b";
+        String alfabetoB="0-9";
+        String alfabetoC="a-m";
+        String type=new String();
+        
+        for(int i=0; i<alfabetoA.length();i++){
+            if(alfabetoA.charAt(i)==','){
+                type="lista";
+            }else if(alfabetoA.charAt(i)=='-'){
+                type="intervalo";
+            }      
+        }
+        if(type.equals("lista")){
+            afd.sigma.add(alfabetoA.charAt(0));
+            System.out.println(afd.sigma.get(0));
+            afd.sigma.add(alfabetoA.charAt(2)); 
+            System.out.println(afd.sigma.get(1));
+        }
+        else if(type.equals("intervalo")){
+            int a=(int)alfabetoA.charAt(0);
+            int b=(int)alfabetoA.charAt(2);
+            int i=0;
+            for(int x=a;x<=b;x++){
+                
+                afd.sigma.add((char)x);
+                System.out.println(afd.sigma.get(i));
+                i++;
+            }
+            
+        }
+         
+    }
+
+
+
 }

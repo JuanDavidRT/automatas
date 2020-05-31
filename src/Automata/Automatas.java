@@ -91,6 +91,7 @@ public class Automatas {
                         break;
                     case 2:
                         System.out.println("Autómata no determinista");
+                        afdController.generarSigma();
                         break;
                     case 3:
                         System.out.println("Autómata lambda no determinista");
