@@ -9,7 +9,7 @@ package Entity;
  *
  * @author leons
  */
-public class AFN_lambda {
+public class AFNLambdaEntity {
     
     public String Sigma[];
     public String States[];

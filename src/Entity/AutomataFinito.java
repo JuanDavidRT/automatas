@@ -1,22 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Entity;
 
-/**
- *
- * @author crist
- */
+import java.util.List;
+
+
 public class AutomataFinito {
-    public char sigma[];
-    public String states[];
+    // atributos de la clase padre principal
+    public List<Character> sigma;
+    public List<String> states;
     public String initialState;  
-    public String acceptanceStates[];    
-    public String transition[][];
+    public List<String>  acceptanceStates;    
+    public String[][] transition;
     
-    public AutomataFinito(char sigma[], String states[], String initialState, String acceptanceStates[], String transition[][] ){
+    
+    // metodos
+    // constructor básico
+    public AutomataFinito(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][] ){
         this.sigma = sigma;
         this.states=states;
         this.initialState= initialState;
@@ -25,10 +24,51 @@ public class AutomataFinito {
         
     }
     
-    public boolean  procesarCadena(String cadena){
+    // constructor desde archivo
+    public AutomataFinito(String nombreDeArchivo){
+    
         
-        return false;
     }
+    
+    
+    // metodos (que se encontraban antes en AFDController)
+    public boolean procesarCadena() {
+        
+        boolean result = false;
+        
+        return result;
+    }
+    
+    public String procesarTransicion(String[][] transicion, String buffer, char read) {
+        
+        String bufferResult = new String();
+      
+        return bufferResult;
+    }
+
+    public boolean procesarCadenaConDetalle() {
+        
+        boolean result = false;
+
+        return result;
+    }
+  
+    public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
+        
+        String bufferResult = new String();
+        
+        return bufferResult;
+    }
+    
+    public boolean procesarListaDeCadenas() {
+       
+        boolean result = false;
+
+        return result;
+    }
+    
+    
+
+
+// fin de la clase
 }
-
-

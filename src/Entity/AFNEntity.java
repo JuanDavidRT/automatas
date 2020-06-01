@@ -9,7 +9,7 @@ package Entity;
  *
  * @author leons
  */
-public class AFN {
+public class AFNEntity {
     
     public String Sigma[];
     public String States[];

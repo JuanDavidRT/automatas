@@ -6,7 +6,7 @@
 package Automata;
 
 import Controller.AFDController;
-import Entity.AFD;
+import Entity.AFDEntity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -38,7 +38,8 @@ public class Automatas {
       
         
         afdController = new AFDController();
-        AFD pepito = new AFD();
+        afdController.crearAutomata();
+        
         
 
         Scanner sn = new Scanner(System.in);
