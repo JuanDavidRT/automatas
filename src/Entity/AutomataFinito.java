@@ -28,47 +28,16 @@ public class AutomataFinito {
     public AutomataFinito(String nombreDeArchivo){
     
         
+        
+    }
+    public AutomataFinito(){
+    
+        
+        
     }
     
     
-    // metodos (que se encontraban antes en AFDController)
-    public boolean procesarCadena() {
-        
-        boolean result = false;
-        
-        return result;
-    }
-    
-    public String procesarTransicion(String[][] transicion, String buffer, char read) {
-        
-        String bufferResult = new String();
-      
-        return bufferResult;
-    }
-
-    public boolean procesarCadenaConDetalle() {
-        
-        boolean result = false;
-
-        return result;
-    }
-  
-    public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
-        
-        String bufferResult = new String();
-        
-        return bufferResult;
-    }
-    
-    public boolean procesarListaDeCadenas() {
-       
-        boolean result = false;
-
-        return result;
-    }
-    
-    
-
+   
 
 // fin de la clase
 }
