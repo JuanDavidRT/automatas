@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Entity.AFDEntity;
+import Entity.AutomataFinito;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -22,12 +22,17 @@ import java.util.List;
 
 public class AFDController {
 
-    AFDEntity afdEntity;
+    AutomataFinito automataFinito;
     int countf=0;
     int contc=0;
     List<String> lineasArchivo = new ArrayList<>();
 
-    public AFDController(){}
+    public AFDController(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][] ){
+    automataFinito=new AutomataFinito(sigma,states,initialState,acceptanceStates,transition );
+    }
+     public AFDController(String nombreDeArchivo){
+    automataFinito=new AutomataFinito(nombreDeArchivo);
+    }
     
     //metodo para crear un AFDEntity HARCODED
     public void crearAutomata() {
@@ -60,30 +65,122 @@ public class AFDController {
         transition[2][0] = "q1";
         transition[2][1] = "q1";
 
-        afdEntity = new AFDEntity(sigma, states, initialState, acceptanceStates, transition);
+        automataFinito = new AutomataFinito(sigma, states, initialState, acceptanceStates, transition);
         
     }
     
+    // metodos que se encontraba antes en AFDController
+    public boolean procesarCadena(String cadena) {
+        System.out.println("-------- AFDEntity procesar cadena --------");
+         
+        String buffer = automataFinito.initialState;
+        boolean result = false;
+        for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
+            char read = cadena.charAt(i);
+            buffer = procesarTransicion(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            result = false;           //reinicializo en false para cada iteración
+            for (int j = 0; j < automataFinito.acceptanceStates.size(); j++) {
+                if (buffer.equals(automataFinito.acceptanceStates.get(j))) {
+                    result = true;                                // dice si es aceptado o no
+                }
+            }
+        }
+
+        return result;
+    }
+    
+    public String procesarTransicion(String[][] transicion, String buffer, char read) {
+        String bufferResult = new String();
+        for (int i = 0; i < automataFinito.states.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(automataFinito.states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
+
+                for (int j = 0; j < automataFinito.sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == automataFinito.sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
+                        bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
+                        //y la segunda columna el alfabeto
+                    }
+                }
+            }
+        }
+
+        return bufferResult;
+    }
+
+    public boolean procesarCadenaConDetalle(String cadena) {
+        
+        String buffer = automataFinito.initialState;
+        boolean result = false;
+        for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
+            char read = cadena.charAt(i);
+            buffer = procesarTransicionConDetalle(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            result = false;           //reinicializo en false para cada iteración
+            for (int j = 0; j < automataFinito.acceptanceStates.size(); j++) {
+                if (buffer.equals(automataFinito.acceptanceStates.get(j))) {
+                    result = true;                                // dice si es aceptado o no
+                }
+            }
+        }
+
+        return result;
+    }
+  
+    public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
+        String bufferResult = new String();
+        for (int i = 0; i < automataFinito.states.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(automataFinito.states.get(i))) {              //si el estado actual buffer es igual a un estado en el automata ocntinua
+                for (int j = 0; j < automataFinito.sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == automataFinito.sigma.get(j)) {                 //si el caracter es igual a la posicioòn de sigma entra, 
+                        bufferResult = transicion[i][j];    // aqui parece que se está desbordando en rl indice   teniendo en cuenta que en el array de transicion la primera columa son los estados
+                        //y la segunda columna los posibles caracteres
+                    }
+                }
+            }
+        }
+        System.out.println("En el estado " + buffer + " Lee " + read + " y pasa al estado " + bufferResult);
+        return bufferResult;
+    }
+    
+    public boolean procesarListaDeCadenas() {
+        String Lista[] = new String[5];
+        Lista[0] = "ababab";
+        Lista[1] = "babab";
+        Lista[2] = "aabab";
+        Lista[3] = "abbab";
+        Lista[4] = "ababb";
+        
+        boolean result = false;
+
+        for (int i = 0; i < Lista.length; i++) {
+            String buffer = automataFinito.initialState;
+            String cadena = Lista[i];
+            for (int j = 0; j < cadena.length(); j++) {  //un loop para leer la cadena de entrada
+                char read = cadena.charAt(j);
+                buffer = procesarTransicionConDetalle(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+                result = false;           //reinicializo en false para cada iteración
+                for (int k = 0; k < automataFinito.acceptanceStates.size(); k++) {
+                    if (buffer.equals(automataFinito.acceptanceStates.get(k))) {
+                        result = true;                                // dice si es aceptado o no
+                    }
+                }
+            }
+            int ot = i + 1;
+        if (result) {
+            
+            System.out.println("La cadena " + ot + " es aceptada");
+            System.out.println();
+        } else {
+            System.out.println("La cadena " + ot + " NO es aceptada");
+            System.out.println();
+        }// dice si es aceptado o no
+        
+        }
+
+        return result;
+    }  
     
     
-    public boolean procesarCadena(){
-       System.out.println("-------- AFDEntity procesar cadena --------");
-       boolean resultado ;
-       return resultado = afdEntity.procesarCadena();
-       
-   }
     
-    public boolean procesarCadenaConDetalle(){
-       boolean resultado;
-       return resultado = afdEntity.procesarCadenaConDetalle();
-       
-   }    
-    
-    public boolean procesarListaDeCadenas(){
-       boolean resultado;
-       return resultado = afdEntity.procesarListaDeCadenas();
-       
-   } 
+   
     
     public void generarSigma(){
         String alfabetoA="a,b";
@@ -99,10 +196,10 @@ public class AFDController {
             }      
         }
         if(type.equals("lista")){
-            afdEntity.sigma.add(alfabetoA.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
-            System.out.println(afdEntity.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
-            afdEntity.sigma.add(alfabetoA.charAt(2)); 
-            System.out.println(afdEntity.sigma.get(1));
+            automataFinito.sigma.add(alfabetoA.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
+            System.out.println(automataFinito.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
+            automataFinito.sigma.add(alfabetoA.charAt(2)); 
+            System.out.println(automataFinito.sigma.get(1));
         }
         else if(type.equals("intervalo")){
             int a=(int)alfabetoA.charAt(0);
@@ -110,14 +207,15 @@ public class AFDController {
             int i=0;
             for(int x=a;x<=b;x++){
                 
-                afdEntity.sigma.add((char)x);
-                System.out.println(afdEntity.sigma.get(i));
+                automataFinito.sigma.add((char)x);
+                System.out.println(automataFinito.sigma.get(i));
                 i++;
             }
             
         }
          
     }
+    
 
 
 // fin de Clase

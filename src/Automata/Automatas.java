@@ -6,7 +6,6 @@
 package Automata;
 
 import Controller.AFDController;
-import Entity.AFDEntity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -35,17 +34,13 @@ public class Automatas {
         // TODO code application logic here
         
         
-      
-        
-        afdController = new AFDController();
-        afdController.crearAutomata();
-        
         
 
         Scanner sn = new Scanner(System.in);
         int option, optionIn;
         boolean exit = false;
         boolean result=false;
+        String cadena= new String();
         while (!exit) {
 
             System.out.println("Automatas");
@@ -69,7 +64,9 @@ public class Automatas {
                         optionIn = sn.nextInt();
                         switch (optionIn) {
                             case 1:
-                                result = afdController.procesarCadena();
+                                System.out.println("Por favor inrese la cadena a evaluar:");
+                                cadena=sn.next();
+                                result = afdController.procesarCadena(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
                                 } else {
@@ -77,7 +74,9 @@ public class Automatas {
                                 }
                                 break;
                                 case 2:
-                                result = afdController.procesarCadenaConDetalle();
+                                    System.out.println("Por favor inrese la cadena a evaluar:");
+                                 cadena=sn.next();
+                                result = afdController.procesarCadenaConDetalle(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
                                 } else {
