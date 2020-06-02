@@ -6,6 +6,8 @@
 package Automata;
 
 import Controller.AFDController;
+import Controller.ArchivoController;
+import Entity.AutomataFinito;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -22,12 +24,15 @@ import java.util.Scanner;
 public class Automatas {
 
     public static AFDController afdController;
-
+    public static ArchivoController archivoController;
+    public static AutomataFinito automataFinito;
     /**
      * @param args the command line arguments
      */
     public Automatas() {
-
+        afdController= new AFDController();
+        archivoController = new ArchivoController();
+        automataFinito= new AutomataFinito();
     }
 
     public static void main(String[] args) {
@@ -45,10 +50,11 @@ public class Automatas {
 
             System.out.println("Automatas");
             System.out.println(" ");
-            System.out.println("1.AFD");
-            System.out.println("2.AFN");
-            System.out.println("3.AFN-lambda");
-            System.out.println("4. Salir");
+            System.out.println("1.Leer automata desde archivo");
+            System.out.println("2.AFD");
+            System.out.println("3.AFN");
+            System.out.println("4.AFN-lambda");
+            System.out.println("5. Salir");
 
             try {
 
@@ -56,6 +62,12 @@ public class Automatas {
 
                 switch (option) {
                     case 1:
+                        System.out.println("Ingrese la ruta del archivo .txt:");
+                        String ruta = sn.next();
+                        automataFinito= archivoController.leerArchivo(ruta);
+                        
+                        break;
+                    case 2:
                         System.out.println("Autómata determinista");
                         System.out.println("Escribe una de las opciones");
                         System.out.println("1.Procesar Cadena");
@@ -89,14 +101,14 @@ public class Automatas {
                                 break;
                         }
                         break;
-                    case 2:
+                    case 3:
                         System.out.println("Autómata no determinista");
                         afdController.generarSigma();
                         break;
-                    case 3:
+                    case 4:
                         System.out.println("Autómata lambda no determinista");
                         break;
-                    case 4:
+                    case 5:
                         exit = true;
                         break;
                     default:

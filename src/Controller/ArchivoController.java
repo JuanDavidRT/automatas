@@ -17,15 +17,15 @@ import java.util.List;
  *
  * @author leons
  */
-public class ArichivoController {
+public class ArchivoController {
     AutomataFinito afd;
      int countf=0;
     int contc=0;
     List<String> lineasArchivo = new ArrayList<>();
-    public  ArichivoController() {
+    public  ArchivoController() {
        
     }
-     public AutomataFinito leerArchivo() {
+     public AutomataFinito leerArchivo(String ruta) {
 
         File archivo = null;
         FileReader fr = null;
@@ -35,7 +35,7 @@ public class ArichivoController {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            archivo = new File("C:\\Universidad\\nose.txt");
+            archivo = new File(ruta);
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
 
@@ -67,7 +67,7 @@ public class ArichivoController {
 
             if (i == 0) {
                 if (lineasArchivo.get(0).equals("#!dfa")) {
-                    System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");/// crea un objeto AFD
+                    System.out.println("-----AUTOMATA FINITO DETERMINISTA-----");/// crea un objeto AFD
                 } else if (lineasArchivo.get(0).equals("#!nfa")) {
                     System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); /// crea un objeto AFN
                 } else if (lineasArchivo.get(0).equals("#!nfe")) {
@@ -79,7 +79,7 @@ public class ArichivoController {
             }
             if (lineasArchivo.get(i).equals("#alphabet")) {
                 while (!lineasArchivo.get(i + 1).equals("#states") && i <= lineasArchivo.size()) {
-                    System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
+                    System.out.println("busco"); // agregar alfabeto e identificar intervalo de alfabeto
 
                     i++;
                 }

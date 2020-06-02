@@ -27,11 +27,11 @@ public class AFDController {
     int contc=0;
     List<String> lineasArchivo = new ArrayList<>();
 
-    public AFDController(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][] ){
-    automataFinito=new AutomataFinito(sigma,states,initialState,acceptanceStates,transition );
+    public AFDController(){
     }
-     public AFDController(String nombreDeArchivo){
-    automataFinito=new AutomataFinito(nombreDeArchivo);
+    
+     public AFDController(AutomataFinito automata){
+    automataFinito=automata;
     }
     
     //metodo para crear un AFDEntity HARCODED
