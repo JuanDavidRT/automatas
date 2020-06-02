@@ -33,7 +33,7 @@ public class AutomataFinito {
         states= new ArrayList<>();
         initialState= new String();  
         acceptanceStates= new ArrayList<>();    
-        transition= new String[3][2];
+        transition= new String[states.size()][sigma.size()];
     }
     
     

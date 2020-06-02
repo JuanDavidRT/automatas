@@ -30,8 +30,8 @@ public class ArchivoController {
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
-        afd=new AutomataFinito();
-       
+
+        
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
@@ -67,7 +67,7 @@ public class ArchivoController {
 
             if (i == 0) {
                 if (lineasArchivo.get(0).equals("#!dfa")) {
-                    System.out.println("-----AUTOMATA FINITO DETERMINISTA-----");/// crea un objeto AFD
+                    System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");/// crea un objeto AFD
                 } else if (lineasArchivo.get(0).equals("#!nfa")) {
                     System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); /// crea un objeto AFN
                 } else if (lineasArchivo.get(0).equals("#!nfe")) {
@@ -79,23 +79,26 @@ public class ArchivoController {
             }
             if (lineasArchivo.get(i).equals("#alphabet")) {
                 while (!lineasArchivo.get(i + 1).equals("#states") && i <= lineasArchivo.size()) {
-                    System.out.println("busco"); // agregar alfabeto e identificar intervalo de alfabeto
-
+                    //System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
+                    generarSigma(lineasArchivo.get(i+1));
                     i++;
                 }
 
             }
             if (lineasArchivo.get(i).equals("#states")) {
                 while (!lineasArchivo.get(i + 1).equals("#initial") && i <= lineasArchivo.size()) {
-                    System.out.println("busco estados "); // agregar alfabeto e identicar intervalo de alfabeto
+                   // System.out.println("busco estados "); // agregar alfabeto e identicar intervalo de alfabeto
                     afd.states.add(lineasArchivo.get(i+1));
+                    
+                    
                     i++;
                 }
             }
             if (lineasArchivo.get(i).equals("#initial")) {
                 while (!lineasArchivo.get(i + 1).equals("#accepting") && i <= lineasArchivo.size()) {
                     System.out.println("busco ini"); // agregar estado inicial del automata
-                    afd.initialState=lineasArchivo.get(i+1);
+                    
+                    afd.initialState= lineasArchivo.get(i+1);
                     i++;
                 }
             }
@@ -109,15 +112,49 @@ public class ArchivoController {
 
             }
             if (lineasArchivo.get(i).equals("#transitions")) {
-                while (i<lineasArchivo.size()) {
-                    System.out.println("leo trans "); // agregar estado inicial del automata
-
-                    i++;
+                for (int j = i+1; j < lineasArchivo.size(); j++) {
+                    for (int k = 0; k < lineasArchivo.get(j).length(); k++) {
+                        afd.transition[(int)lineasArchivo.get(j).charAt(1)][afd.sigma.indexOf(lineasArchivo.get(j).charAt(3))]=lineasArchivo.get(j).substring(4, 6);
+                    }
                 }
+               }
 
             }
-
-        }
             return afd;
+        }
+         public void generarSigma(String sigma){
+        String alfabetoA=sigma;
+        String alfabetoB="0-9";
+        String alfabetoC="a-m";
+        String type=new String();
+        
+        for(int i=0; i<alfabetoA.length();i++){
+            if(alfabetoA.charAt(i)==','){
+                type="lista";
+            }else if(alfabetoA.charAt(i)=='-'){
+                type="intervalo";
+            }      
+        }
+        if(type.equals("lista")){
+            afd.sigma.add(alfabetoA.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
+            System.out.println(afd.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
+            afd.sigma.add(alfabetoA.charAt(2)); 
+            System.out.println(afd.sigma.get(1));
+        }
+        else if(type.equals("intervalo")){
+            int a=(int)alfabetoA.charAt(0);
+            int b=(int)alfabetoA.charAt(2);
+            int i=0;
+            for(int x=a;x<=b;x++){
+                
+                afd.sigma.add((char)x);
+                System.out.println(afd.sigma.get(i));
+                i++;
+            }
+            
+        }
+         
     }
-}
+       // return afd;    
+    }
+

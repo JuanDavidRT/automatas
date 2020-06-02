@@ -62,8 +62,8 @@ public class Automatas {
                     case 1:
                         System.out.println("Ingrese la ruta del archivo .txt:");
                         String ruta = sn.next();
-                        automataFinito= archivoController.leerArchivo(ruta);
-                        afdController= new AFDController(automataFinito);
+                         archivoController.leerArchivo(ruta);
+                       
                         System.out.println("Autómata xxx");
                         System.out.println("Escribe una de las opciones");
                         System.out.println("1.Procesar Cadena");
@@ -106,7 +106,7 @@ public class Automatas {
                         break;
                     case 3:
                         System.out.println("Autómata no determinista");
-                        afdController.generarSigma();
+                       // afdController.generarSigma();
                         break;
                     case 4:
                         System.out.println("Autómata lambda no determinista");

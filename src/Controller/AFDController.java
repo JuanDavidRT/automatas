@@ -176,8 +176,8 @@ public class AFDController {
     
    
     
-    public void generarSigma(){
-        String alfabetoA="a,b";
+    public void generarSigma(String sigma){
+        String alfabetoA=sigma;
         String alfabetoB="0-9";
         String alfabetoC="a-m";
         String type=new String();
