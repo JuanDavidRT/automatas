@@ -3,6 +3,7 @@ package Entity;
 
 import java.util.List;
 import Controller.ArchivoController;
+import java.util.ArrayList;
 
 public class AutomataFinito {
     // atributos de la clase padre principal
@@ -28,8 +29,11 @@ public class AutomataFinito {
   
     public AutomataFinito(){
     
-        
-        
+        sigma= new ArrayList<>();
+        states= new ArrayList<>();
+        initialState= new String();  
+        acceptanceStates= new ArrayList<>();    
+        transition= new String[3][2];
     }
     
     
