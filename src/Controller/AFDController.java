@@ -41,9 +41,6 @@ public class AFDController {
     public void crearAutomata( ){
     
         
-        //
-       
-
         // inicializa
         String read = new String();
         int quantity;
@@ -157,20 +154,24 @@ public class AFDController {
     }
     
     public boolean procesarListaDeCadenas() {
-        String Lista[] = new String[5];
-        Lista[0] = "ababab";
-        Lista[1] = "babab";
-        Lista[2] = "aabab";
-        Lista[3] = "abbab";
-        Lista[4] = "ababb";
+        ArrayList<String> Lista = new ArrayList<>();
+        System.out.println("Ingrese la cantidad de cadenas a evaluar");
+        int cant = sn.nextInt();
+        String cadena = new String();
+        for(int i=0; i<cant; i++){
+            int x=i+1;
+            System.out.println("Ingrese la cadena " + x);
+            cadena=sn.next();
+            Lista.add(cadena);
+        }
         
         boolean result = false;
 
-        for (int i = 0; i < Lista.length; i++) {
+        for (int i = 0; i < Lista.size(); i++) {
             String buffer = automataFinito.initialState;
-            String cadena = Lista[i];
-            for (int j = 0; j < cadena.length(); j++) {  //un loop para leer la cadena de entrada
-                char read = cadena.charAt(j);
+            String cadenabuffer=Lista.get(i);
+            for (int j = 0; j < cadenabuffer.length(); j++) {  //un loop para leer la cadena de entrada
+                char read = cadenabuffer.charAt(j);
                 buffer = procesarTransicionConDetalle(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
                 result = false;           //reinicializo en false para cada iteración
                 for (int k = 0; k < automataFinito.acceptanceStates.size(); k++) {
