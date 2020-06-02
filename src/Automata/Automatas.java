@@ -29,15 +29,13 @@ public class Automatas {
     /**
      * @param args the command line arguments
      */
-    public Automatas() {
-        afdController= new AFDController();
-        archivoController = new ArchivoController();
-        automataFinito= new AutomataFinito();
-    }
+   
 
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        afdController= new AFDController();
+        archivoController = new ArchivoController();
+        automataFinito= new AutomataFinito();
         
         
 
@@ -66,7 +64,11 @@ public class Automatas {
                         String ruta = sn.next();
                         automataFinito= archivoController.leerArchivo(ruta);
                         afdController= new AFDController(automataFinito);
-                        
+                        System.out.println("Autómata xxx");
+                        System.out.println("Escribe una de las opciones");
+                        System.out.println("1.Procesar Cadena");
+                        System.out.println("2.Procesar Cadena con detalles");
+                        System.out.println("3.Procesar lista de cadenas");
                         break;
                     case 2:
                         System.out.println("Autómata determinista");
