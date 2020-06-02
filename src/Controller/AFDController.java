@@ -35,17 +35,11 @@ public class AFDController {
     }
     
     //metodo para crear un AFDEntity HARCODED
-    public void crearAutomata() {
+    public void crearAutomata(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][] ){
+    
         
-        
-        //declara HARDCODED las variables para crear el AFD
-        ArrayList<Character> sigma = new ArrayList<Character>();
-        ArrayList<String> states = new ArrayList<String>();
-        String initialState = new String();
-        ArrayList<String> acceptanceStates = new ArrayList<String>();
-        String[][] transition = new String[3][2];
-        
-       
+        //
+       transition = new String[3][2];
 
         // inicializa
         sigma.add('a');

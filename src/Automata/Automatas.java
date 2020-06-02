@@ -65,6 +65,7 @@ public class Automatas {
                         System.out.println("Ingrese la ruta del archivo .txt:");
                         String ruta = sn.next();
                         automataFinito= archivoController.leerArchivo(ruta);
+                        afdController= new AFDController(automataFinito);
                         
                         break;
                     case 2:

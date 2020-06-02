@@ -2,7 +2,7 @@
 package Entity;
 
 import java.util.List;
-
+import Controller.ArchivoController;
 
 public class AutomataFinito {
     // atributos de la clase padre principal
@@ -24,12 +24,8 @@ public class AutomataFinito {
         
     }
     
-    // constructor desde archivo
-    public AutomataFinito(String nombreDeArchivo){
-    
-        
-        
-    }
+   
+  
     public AutomataFinito(){
     
         
