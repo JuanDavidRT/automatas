@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Dentro del modelo MVC las clases de este paquete se 
@@ -26,8 +27,10 @@ public class AFDController {
     int countf=0;
     int contc=0;
     List<String> lineasArchivo = new ArrayList<>();
+    Scanner sn = new Scanner(System.in);
 
     public AFDController(){
+    automataFinito=new AutomataFinito();
     }
     
      public AFDController(AutomataFinito automata){
@@ -35,31 +38,50 @@ public class AFDController {
     }
     
     //metodo para crear un AFDEntity HARCODED
-    public void crearAutomata(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][] ){
+    public void crearAutomata( ){
     
         
         //
-       transition = new String[3][2];
+       
 
         // inicializa
-        sigma.add('a');
-        sigma.add('b');
-        initialState = "q0";
-        acceptanceStates.add("q0");
-        acceptanceStates.add("q2");
+        String read = new String();
+        int quantity;
+        System.out.println("Ingrese el alfabeto");
+        read= sn.next();
+        generarSigma(read);
         
-        for (int i = 0; i < 3; i++) {
-            states.add ( "q" + i);
+        System.out.println("Ingrese el estado inicial");
+        read= sn.next();
+        automataFinito.initialState = read;
+        
+        System.out.println("Ingrese la cantidad de estados de aceptación");
+        quantity= sn.nextInt();
+        for(int i=0; i<quantity;i++){
+            int x= i+1;
+        System.out.println("Ingrese el estado de aceptación " + x);
+        read= sn.next();
+        automataFinito.acceptanceStates.add(read);
         }
+        
+        System.out.println("Ingrese la cantidad de estados");
+        quantity= sn.nextInt();        
+        for (int i = 0; i < quantity; i++) {
+            automataFinito.states.add ( "q" + i);
+        }
+        automataFinito.transition = new String[automataFinito.states.size()][automataFinito.sigma.size()];
+        
+        System.out.println("Ingrese la función de transición");
+        for (int i = 0; i < automataFinito.states.size(); i++) {
+            for (int j = 0; j < automataFinito.sigma.size(); j++) {
+                System.out.println("Ingrese la transición del estado "+automataFinito.states.get(i)+ " cuando lee " + automataFinito.sigma.get(j));
+                read=sn.next();
+                automataFinito.transition[i][j]=read;
+            }
+        }
+        
 
-        transition[0][0] = "q0";
-        transition[0][1] = "q1";
-        transition[1][0] = "q1";
-        transition[1][1] = "q2";
-        transition[2][0] = "q1";
-        transition[2][1] = "q1";
-
-        automataFinito = new AutomataFinito(sigma, states, initialState, acceptanceStates, transition);
+        
         
     }
     
@@ -177,27 +199,25 @@ public class AFDController {
    
     
     public void generarSigma(String sigma){
-        String alfabetoA=sigma;
-        String alfabetoB="0-9";
-        String alfabetoC="a-m";
+    
         String type=new String();
         
-        for(int i=0; i<alfabetoA.length();i++){
-            if(alfabetoA.charAt(i)==','){
+        for(int i=0; i<sigma.length();i++){
+            if(sigma.charAt(i)==','){
                 type="lista";
-            }else if(alfabetoA.charAt(i)=='-'){
+            }else if(sigma.charAt(i)=='-'){
                 type="intervalo";
             }      
         }
         if(type.equals("lista")){
-            automataFinito.sigma.add(alfabetoA.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
+            automataFinito.sigma.add(sigma.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
             System.out.println(automataFinito.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
-            automataFinito.sigma.add(alfabetoA.charAt(2)); 
+            automataFinito.sigma.add(sigma.charAt(2)); 
             System.out.println(automataFinito.sigma.get(1));
         }
         else if(type.equals("intervalo")){
-            int a=(int)alfabetoA.charAt(0);
-            int b=(int)alfabetoA.charAt(2);
+            int a=(int)sigma.charAt(0);
+            int b=(int)sigma.charAt(2);
             int i=0;
             for(int x=a;x<=b;x++){
                 

@@ -64,18 +64,21 @@ public class Automatas {
                         String ruta = sn.next();
                          archivoController.leerArchivo(ruta);
                        
-                        System.out.println("Autómata xxx");
-                        System.out.println("Escribe una de las opciones");
-                        System.out.println("1.Procesar Cadena");
-                        System.out.println("2.Procesar Cadena con detalles");
-                        System.out.println("3.Procesar lista de cadenas");
+//                        System.out.println("Autómata xxx");
+//                        System.out.println("Escribe una de las opciones");
+//                        System.out.println("1.Procesar Cadena");
+//                        System.out.println("2.Procesar Cadena con detalles");
+//                        System.out.println("3.Procesar lista de cadenas");
                         break;
                     case 2:
                         System.out.println("Autómata determinista");
-                        System.out.println("Escribe una de las opciones");
-                        System.out.println("1.Procesar Cadena");
-                        System.out.println("2.Procesar Cadena con detalles");
-                        System.out.println("3.Procesar lista de cadenas");
+                        System.out.println("Por favor ingrese manualmente el automata");
+                        afdController.crearAutomata();
+                        System.out.println("Automáta correctamente creado");
+                        System.out.println("Por favor elija entre las opciones:");
+                        System.out.println("1. Procesar cadena");
+                        System.out.println("2. Procesar cadena con detalle");
+                        System.out.println("3. Procesar lista de cadenas");
                         optionIn = sn.nextInt();
                         switch (optionIn) {
                             case 1:
