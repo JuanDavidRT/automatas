@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class AFDController {
+public class AFDController extends AutomataFinito {
 
     AutomataFinito automataFinito;
     int countf=0;
