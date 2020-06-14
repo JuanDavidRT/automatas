@@ -82,7 +82,7 @@ public class Automatas {
                         optionIn = sn.nextInt();
                         switch (optionIn) {
                             case 1:
-                                System.out.println("Por favor inrese la cadena a evaluar:");
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
                                 cadena=sn.next();
                                 result = afdController.procesarCadena(cadena);
                                 if (result) {
@@ -92,7 +92,7 @@ public class Automatas {
                                 }
                                 break;
                                 case 2:
-                                    System.out.println("Por favor inrese la cadena a evaluar:");
+                                    System.out.println("Por favor ingrese la cadena a evaluar:");
                                  cadena=sn.next();
                                 result = afdController.procesarCadenaConDetalle(cadena);
                                 if (result) {
