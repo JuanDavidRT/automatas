@@ -114,7 +114,7 @@ public class ArchivoController {
             if (lineasArchivo.get(i).equals("#transitions")) {
                 for (int j = i+1; j < lineasArchivo.size(); j++) {
                     for (int k = 0; k < lineasArchivo.get(j).length(); k++) {
-                        afd.transition[(int)lineasArchivo.get(j).charAt(1)][afd.sigma.indexOf(lineasArchivo.get(j).charAt(3))]=lineasArchivo.get(j).substring(4, 6);
+                        afd.transition[(int)lineasArchivo.get(j).charAt(1)][afd.sigma.indexOf(lineasArchivo.get(j).charAt(3))][1]=lineasArchivo.get(j).substring(4, 6);
                     }
                 }
                }

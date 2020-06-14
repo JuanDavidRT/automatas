@@ -66,17 +66,17 @@ public class AFDController {
         for (int i = 0; i < quantity; i++) {
             automataFinito.states.add ( "q" + i);
         }
-        automataFinito.transition = new String[automataFinito.states.size()][automataFinito.sigma.size()];
+        automataFinito.transition = new String[automataFinito.states.size()][automataFinito.sigma.size()][1];
         
         System.out.println("Ingrese la función de transición");
         for (int i = 0; i < automataFinito.states.size(); i++) {
             for (int j = 0; j < automataFinito.sigma.size(); j++) {
                 System.out.println("Ingrese la transición del estado "+automataFinito.states.get(i)+ " cuando lee " + automataFinito.sigma.get(j));
                 read=sn.next();
-                automataFinito.transition[i][j]=read;
+                automataFinito.transition[i][j][0]=read;
             }
         }
-        
+        System.out.println("si me leeeeee");
 
         
         
@@ -102,14 +102,14 @@ public class AFDController {
         return result;
     }
     
-    public String procesarTransicion(String[][] transicion, String buffer, char read) {
+    public String procesarTransicion(String[][][] transicion, String buffer, char read) {
         String bufferResult = new String();
         for (int i = 0; i < automataFinito.states.size(); i++) {               //un loop para la cantidad de estados
             if (buffer.equals(automataFinito.states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
 
                 for (int j = 0; j < automataFinito.sigma.size(); j++) {      //loop para el alfabeto
                     if (read == automataFinito.sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
-                        bufferResult = transicion[i][j];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
+                        bufferResult = transicion[i][j][0];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
                         //y la segunda columna el alfabeto
                     }
                 }
@@ -137,13 +137,13 @@ public class AFDController {
         return result;
     }
   
-    public String procesarTransicionConDetalle(String[][] transicion, String buffer, char read) {
+    public String procesarTransicionConDetalle(String[][][] transicion, String buffer, char read) {
         String bufferResult = new String();
         for (int i = 0; i < automataFinito.states.size(); i++) {               //un loop para la cantidad de estados
             if (buffer.equals(automataFinito.states.get(i))) {              //si el estado actual buffer es igual a un estado en el automata ocntinua
                 for (int j = 0; j < automataFinito.sigma.size(); j++) {      //loop para el alfabeto
                     if (read == automataFinito.sigma.get(j)) {                 //si el caracter es igual a la posicioòn de sigma entra, 
-                        bufferResult = transicion[i][j];    // aqui parece que se está desbordando en rl indice   teniendo en cuenta que en el array de transicion la primera columa son los estados
+                        bufferResult = transicion[i][j][0];    // aqui parece que se está desbordando en rl indice   teniendo en cuenta que en el array de transicion la primera columa son los estados
                         //y la segunda columna los posibles caracteres
                     }
                 }

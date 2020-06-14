@@ -11,12 +11,13 @@ public class AutomataFinito {
     public List<String> states;
     public String initialState;  
     public List<String>  acceptanceStates;    
-    public String[][] transition;
+    public String[][][] transition;
+    
     
     
     // metodos
     // constructor básico
-    public AutomataFinito(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][] ){
+    public AutomataFinito(List<Character> sigma, List<String> states, String initialState, List<String> acceptanceStates, String transition[][][] ){
         this.sigma = sigma;
         this.states=states;
         this.initialState= initialState;
@@ -33,7 +34,7 @@ public class AutomataFinito {
         states= new ArrayList<>();
         initialState= new String();  
         acceptanceStates= new ArrayList<>();    
-        transition= new String[states.size()][sigma.size()];
+        transition= new String[states.size()][sigma.size()][1];
     }
     
     
