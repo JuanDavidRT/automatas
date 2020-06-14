@@ -13,13 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Dentro del modelo MVC las clases de este paquete se 
- * encargan de manejar las interacciones entre
- *      View (que se encaga de manejar las interacciones con el usuario)
- *                              y
- *      Entity (Model en MVC, que maneja las entidades, objetos, atributos y metodos)
- */
 
 public class AFDController {
 
@@ -82,7 +75,7 @@ public class AFDController {
         
     }
     
-    // metodos que se encontraba antes en AFDController
+    // metodos para procesar cadenas
     public boolean procesarCadena(String cadena) {
         System.out.println("-------- AFDEntity procesar cadena --------");
          

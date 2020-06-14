@@ -18,20 +18,27 @@ import java.util.List;
  * @author leons
  */
 public class ArchivoController {
-    AutomataFinito afd;
-     int countf=0;
+    
+    AutomataFinito afd = new AutomataFinito();
+    int countf=0;
     int contc=0;
     List<String> lineasArchivo = new ArrayList<>();
+    
+ 
+    
+    
     public  ArchivoController() {
        
     }
-     public AutomataFinito leerArchivo(String ruta) {
+    
+    public AutomataFinito leerArchivo(String ruta) {
 
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
 
         
+        //Se lee las lineas del archivo y se extraen los datos
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
@@ -62,21 +69,26 @@ public class ArchivoController {
             }
         }
        
-        //Se lee las lineas del archivo y se extraen los datos
+      
+        //se leen las string en la lista
         for (int i = 0; i < lineasArchivo.size(); i++) {
 
+            // de determina que tido de Auotomata contiene el archivocon la primera linea
             if (i == 0) {
                 if (lineasArchivo.get(0).equals("#!dfa")) {
-                    System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");/// crea un objeto AFD
+                    System.out.println("-----AUTOMOATA FINITO DETERMINISTA-----");
                 } else if (lineasArchivo.get(0).equals("#!nfa")) {
-                    System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); /// crea un objeto AFN
+                    System.out.println("-----AUTOAMTA FINITO NO DETERMINISTA-----"); 
                 } else if (lineasArchivo.get(0).equals("#!nfe")) {
-                    System.out.println("-----AUTOMATA FINITO NO DETERMINISTA CON TRANSICIONES LAMBDA------");   // crea objeto AFN lambda 
+                    System.out.println("-----AUTOMATA FINITO NO DETERMINISTA CON TRANSICIONES LAMBDA------");
                 } else {
-                    System.out.println("----NO HA ESCRITO EL TIPO DE AUTOMATA------- ");
+                    System.out.println("----NO HA ESCRITO EL TIPO DE AUTOMATA    ¡Archivo no aceptado!  ------- ");
 
                 }
             }
+            
+            
+            //seccion que genera los alfabetos
             if (lineasArchivo.get(i).equals("#alphabet")) {
                 while (!lineasArchivo.get(i + 1).equals("#states") && i <= lineasArchivo.size()) {
                     //System.out.println("busco"); // agregar alfabeto e identicar intervalo de alfabeto
@@ -85,6 +97,8 @@ public class ArchivoController {
                 }
 
             }
+            
+            
             if (lineasArchivo.get(i).equals("#states")) {
                 while (!lineasArchivo.get(i + 1).equals("#initial") && i <= lineasArchivo.size()) {
                    // System.out.println("busco estados "); // agregar alfabeto e identicar intervalo de alfabeto
@@ -114,22 +128,29 @@ public class ArchivoController {
             if (lineasArchivo.get(i).equals("#transitions")) {
                 for (int j = i+1; j < lineasArchivo.size(); j++) {
                     for (int k = 0; k < lineasArchivo.get(j).length(); k++) {
-                        afd.transition[(int)lineasArchivo.get(j).charAt(1)][afd.sigma.indexOf(lineasArchivo.get(j).charAt(3))][1]=lineasArchivo.get(j).substring(4, 6);
+
+                        afd.transition[(int)lineasArchivo.get(j).charAt(1)][afd.sigma.indexOf(lineasArchivo.get(j).charAt(3))][1] = lineasArchivo.get(j).substring(4, 6);
+
                     }
                 }
                }
 
             }
+        
+        
             return afd;
+            
         }
-         public void generarSigma(String sigma){
-        String alfabetoA=sigma;
-        String alfabetoB="0-9";
-        String alfabetoC="a-m";
-        String type=new String();
+    
+    
+    //interpreta y añade aol alfabeto liena por linea
+    public void generarSigma(String sigma){
+        
+        String alfabetoA = sigma;
+        String type = new String();
         
         for(int i=0; i<alfabetoA.length();i++){
-            if(alfabetoA.charAt(i)==','){
+            if(alfabetoA.charAt(i)==','){       // estas comas no están el los formatos admitidos
                 type="lista";
             }else if(alfabetoA.charAt(i)=='-'){
                 type="intervalo";
@@ -142,19 +163,22 @@ public class ArchivoController {
             System.out.println(afd.sigma.get(1));
         }
         else if(type.equals("intervalo")){
-            int a=(int)alfabetoA.charAt(0);
+            
+            int a=(int)alfabetoA.charAt(0);  // toma valores ASCII
             int b=(int)alfabetoA.charAt(2);
             int i=0;
             for(int x=a;x<=b;x++){
-                
-                afd.sigma.add((char)x);
-                System.out.println(afd.sigma.get(i));
+                System.out.println(" el valor de x: " + (char)x);
+                afd.sigma.add( (char)x );
+                System.out.println("valor guardado en el AF" + afd.sigma.get(i));
                 i++;
             }
             
         }
          
     }
-       // return afd;    
+         
+        
+       // return afd;
     }
 
