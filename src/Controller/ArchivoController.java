@@ -8,9 +8,15 @@ package Controller;
 import Entity.AutomataFinito;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -158,6 +164,59 @@ public class ArchivoController {
                 System.out.println("valor guardado en el AF" + afd.sigma.get(i));
                 i++;
             }
+        }
+    }
+
+    public void generarArchivo(AutomataFinito automata) {
+        final Formatter x;
+        Scanner sn = new Scanner(System.in);
+        System.out.println("Ingresa el nombre que deseas para el arhcivo del automata");
+        String fileName = sn.next();
+
+        try {
+            File archivo = new File(fileName + ".txt");
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
+
+            PrintWriter pw = new PrintWriter(archivo);
+            System.out.println("Ingresa el tipo de automata");
+            System.out.println("1.AFD");
+            System.out.println("2.AFN");
+            System.out.println("3.AFN-lambda");
+            int option = sn.nextInt();
+            switch (option) {
+                case 1:
+                    pw.println("#!dfa");
+                    break;
+                case 2:
+                    pw.println("#!nfa");
+                    break;
+                case 3:
+                    pw.println("#!nfe");
+                    break;
+            }
+            pw.println("#alphabet");
+            for (int i = 0; i < automata.sigma.size(); i++) {
+                System.out.println(automata.initialState);
+                pw.println(automata.sigma.get(i));
+            }
+            pw.println("#states");
+            for (int i = 0; i < automata.states.size(); i++) {
+                pw.println(automata.states.get(i));
+            }
+            pw.println("#initial");
+            pw.println(automata.initialState);
+            pw.println("#accepting");
+            for (int i = 0; i < automata.acceptanceStates.size(); i++) {
+                pw.println(automata.acceptanceStates.get(i));
+            }
+            pw.println("#transitions");
+            
+            pw.close();
+            System.out.println("Archivo creado exitosamente");
+        } catch (IOException ex) {
+            System.out.println("El archivo no se ha podido guardar");
         }
     }
     // return afd;

@@ -1,0 +1,6 @@
+#!dfa
+#alphabet
+#states
+#initial
+
+#accepting

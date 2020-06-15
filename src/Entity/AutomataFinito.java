@@ -23,7 +23,7 @@ public class AutomataFinito {
         this.initialState= initialState;
         this.acceptanceStates = acceptanceStates;
         this.transition = transition;
-        
+//        
     }
     
    

@@ -75,6 +75,7 @@ public class Automatas {
                         System.out.println("Por favor ingrese manualmente el automata");
                         afdController.crearAutomata();
                         System.out.println("Automáta correctamente creado");
+                        archivoController.generarArchivo(automataFinito);
                         System.out.println("Por favor elija entre las opciones:");
                         System.out.println("1. Procesar cadena");
                         System.out.println("2. Procesar cadena con detalle");
@@ -117,8 +118,10 @@ public class Automatas {
                     case 5:
                         exit = true;
                         break;
+                    case 6: //solo para pruebas
+                        
                     default:
-                        System.out.println("Solo números entre 1 y 4");
+                        System.out.println("Solo números entre 1 y 5");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Debes insertar un número");
