@@ -19,20 +19,23 @@ import java.util.Scanner;
  * usuario) y Entity (Model en MVC, que maneja las entidades, objetos, atributos
  * y metodos)
  */
-public class AFNController {
+public class AFNController extends AutomataFinito {
 
-    AutomataFinito automataFinito;
     int countf = 0;
     int contc = 0;
     List<String> lineasArchivo = new ArrayList<>();
     Scanner sn = new Scanner(System.in);
 
     public AFNController() {
-        automataFinito = new AutomataFinito();
+       
     }
 
     public AFNController(AutomataFinito automata) {
-        automataFinito = automata;
+        sigma = automata.sigma;
+        acceptanceStates = automata.acceptanceStates;
+        states = automata.states;
+        initialState = automata.initialState;
+        transition = automata.transition;
     }
 
     //metodo para crear un AFDEntity HARCODED
@@ -48,7 +51,7 @@ public class AFNController {
 
         System.out.println("Ingrese el estado inicial");
         read = sn.next();
-        automataFinito.initialState = read;
+        initialState = read;
 
         System.out.println("Ingrese la cantidad de estados de aceptación");
         quantity = sn.nextInt();
@@ -56,36 +59,35 @@ public class AFNController {
             int x = i + 1;
             System.out.println("Ingrese el estado de aceptación " + x);
             read = sn.next();
-            automataFinito.acceptanceStates.add(read);
+            acceptanceStates.add(read);
         }
 
         System.out.println("Ingrese la cantidad de estados");
         quantity = sn.nextInt();
         for (int i = 0; i < quantity; i++) {
-            automataFinito.states.add("q" + i);
+            states.add("q" + i);
         }
-        automataFinito.transition = new String[automataFinito.states.size()][automataFinito.sigma.size()][automataFinito.states.size()];
+        transition = new String[states.size()][sigma.size()][states.size()];
 
         System.out.println("Ingrese la función de transición");
-        for (int i = 0; i < automataFinito.states.size(); i++) {
-            for (int j = 0; j < automataFinito.sigma.size(); j++) {
-                System.out.println("Ingrese la transición del estado " + automataFinito.states.get(i) + " cuando lee " + automataFinito.sigma.get(j) + ", Si ya completo todas las transiciones de ese elemento ingrese el 0");
+        for (int i = 0; i < states.size(); i++) {
+            for (int j = 0; j < sigma.size(); j++) {
+                System.out.println("Ingrese la transición del estado " + states.get(i) + " cuando lee " + sigma.get(j) + ", Si ya completo todas las transiciones de ese elemento ingrese el 0");
                 int k = 0;
                 while (1 > 0) {
                     read = sn.next();
                     if (read.equals("0")) {
                         break;
                     }
-
-                    automataFinito.transition[i][j][k] = read;
+                    transition[i][j][k] = read;
                     k++;
                 }
             }
         }
-        for (int i = 0; i < automataFinito.states.size(); i++) {
-            for (int j = 0; j < automataFinito.sigma.size(); j++) {
-                for (int k = 0; k < automataFinito.states.size(); k++) {
-                    System.out.println(i + "|" + j + "|" + k + "|" + " = " + automataFinito.transition[i][j][k]);
+        for (int i = 0; i < states.size(); i++) {
+            for (int j = 0; j < sigma.size(); j++) {
+                for (int k = 0; k < states.size(); k++) {
+                    System.out.println(i + "|" + j + "|" + k + "|" + " = " + transition[i][j][k]);
                 }
             }
         }
@@ -95,30 +97,56 @@ public class AFNController {
     public boolean procesarCadena(String cadena) {
         System.out.println("-------- AFDEntity procesar cadena --------");
 
-        String buffer = automataFinito.initialState;
+        String buffer = initialState;
+        ArrayList<String> bufferList = new ArrayList();
         boolean result = false;
         for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
             char read = cadena.charAt(i);
-            buffer = procesarTransicion(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
-            result = false;           //reinicializo en false para cada iteración
-            for (int j = 0; j < automataFinito.acceptanceStates.size(); j++) {
-                if (buffer.equals(automataFinito.acceptanceStates.get(j))) {
-                    result = true;                                // dice si es aceptado o no
-                }
-            }
+            bufferList = procesarTransicionesPosibles(transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            for (int j = 0; j < bufferList.size(); j++) {
+                 buffer = procesarTransicion(transition, buffer, read);
+                 result = false;                       //reinicializo en false para cada iteración
+                for (int k = 0; k < acceptanceStates.size(); k++) {
+                  if (buffer.equals(acceptanceStates.get(k))) {
+                      result = true;                                // dice si es aceptado o no
+                  }
+                 }
+             }
+            
         }
         return result;
     }
 
+    public ArrayList<String> procesarTransicionesPosibles(String[][][] transicion, String buffer, char read) {
+        String bufferResult = new String();
+        ArrayList<String> list= new ArrayList();
+        for (int i = 0; i < states.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
+
+                for (int j = 0; j < sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == sigma.get(j)) { 
+                        for (int k = 0; k < states.size(); k++) {
+                            bufferResult = transicion[i][j][k];
+                            list.add(bufferResult);
+                        }
+                                                                            //si el caracter es igual a la posición de sigma entra, 
+                            //teniendo en cuenta que en el array de transicion la primera columna son los estados
+                        //y la segunda columna el alfabeto
+                    }
+                }
+            }
+        }
+        return list;
+    }
     public String procesarTransicion(String[][][] transicion, String buffer, char read) {
         String bufferResult = new String();
-        for (int i = 0; i < automataFinito.states.size(); i++) {               //un loop para la cantidad de estados
-            if (buffer.equals(automataFinito.states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
+        for (int i = 0; i < states.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
 
-                for (int j = 0; j < automataFinito.sigma.size(); j++) {      //loop para el alfabeto
-                    if (read == automataFinito.sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
+                for (int j = 0; j < sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
                         bufferResult = transicion[i][j][0];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
-                        //y la segunda columna el alfabeto
+                                                               //y la segunda columna el alfabeto
                     }
                 }
             }
@@ -128,14 +156,14 @@ public class AFNController {
 
     public boolean procesarCadenaConDetalle(String cadena) {
 
-        String buffer = automataFinito.initialState;
+        String buffer = initialState;
         boolean result = false;
         for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
             char read = cadena.charAt(i);
-            buffer = procesarTransicionConDetalle(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            buffer = procesarTransicionConDetalle(transition, buffer, read);//procesa el caracter que está en la posicion de i del string
             result = false;           //reinicializo en false para cada iteración
-            for (int j = 0; j < automataFinito.acceptanceStates.size(); j++) {
-                if (buffer.equals(automataFinito.acceptanceStates.get(j))) {
+            for (int j = 0; j < acceptanceStates.size(); j++) {
+                if (buffer.equals(acceptanceStates.get(j))) {
                     result = true;                                // dice si es aceptado o no
                 }
             }
@@ -145,10 +173,10 @@ public class AFNController {
 
     public String procesarTransicionConDetalle(String[][][] transicion, String buffer, char read) {
         String bufferResult = new String();
-        for (int i = 0; i < automataFinito.states.size(); i++) {               //un loop para la cantidad de estados
-            if (buffer.equals(automataFinito.states.get(i))) {              //si el estado actual buffer es igual a un estado en el automata ocntinua
-                for (int j = 0; j < automataFinito.sigma.size(); j++) {      //loop para el alfabeto
-                    if (read == automataFinito.sigma.get(j)) {                 //si el caracter es igual a la posicioòn de sigma entra, 
+        for (int i = 0; i < states.size(); i++) {               //un loop para la cantidad de estados
+            if (buffer.equals(states.get(i))) {              //si el estado actual buffer es igual a un estado en el automata ocntinua
+                for (int j = 0; j < sigma.size(); j++) {      //loop para el alfabeto
+                    if (read == sigma.get(j)) {                 //si el caracter es igual a la posicioòn de sigma entra, 
                         bufferResult = transicion[i][j][0];    // aqui parece que se está desbordando en rl indice   teniendo en cuenta que en el array de transicion la primera columa son los estados
                         //y la segunda columna los posibles caracteres
                     }
@@ -174,14 +202,14 @@ public class AFNController {
         boolean result = false;
 
         for (int i = 0; i < Lista.size(); i++) {
-            String buffer = automataFinito.initialState;
+            String buffer = initialState;
             String cadenabuffer = Lista.get(i);
             for (int j = 0; j < cadenabuffer.length(); j++) {  //un loop para leer la cadena de entrada
                 char read = cadenabuffer.charAt(j);
-                buffer = procesarTransicionConDetalle(automataFinito.transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+                buffer = procesarTransicionConDetalle(transition, buffer, read);//procesa el caracter que está en la posicion de i del string
                 result = false;           //reinicializo en false para cada iteración
-                for (int k = 0; k < automataFinito.acceptanceStates.size(); k++) {
-                    if (buffer.equals(automataFinito.acceptanceStates.get(k))) {
+                for (int k = 0; k < acceptanceStates.size(); k++) {
+                    if (buffer.equals(acceptanceStates.get(k))) {
                         result = true;                                // dice si es aceptado o no
                     }
                 }
@@ -200,30 +228,30 @@ public class AFNController {
         return result;
     }
 
-    public void generarSigma(String sigma) {
+    public void generarSigma(String Sigma) {
 
         String type = new String();
 
-        for (int i = 0; i < sigma.length(); i++) {
-            if (sigma.charAt(i) == ',') {
+        for (int i = 0; i < Sigma.length(); i++) {
+            if (Sigma.charAt(i) == ',') {
                 type = "lista";
-            } else if (sigma.charAt(i) == '-') {
+            } else if (Sigma.charAt(i) == '-') {
                 type = "intervalo";
             }
         }
         if (type.equals("lista")) {
-            automataFinito.sigma.add(sigma.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
-            System.out.println(automataFinito.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
-            automataFinito.sigma.add(sigma.charAt(2));
-            System.out.println(automataFinito.sigma.get(1));
+            sigma.add(Sigma.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
+            System.out.println(sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
+            sigma.add(Sigma.charAt(2));
+            System.out.println(sigma.get(1));
         } else if (type.equals("intervalo")) {
-            int a = (int) sigma.charAt(0);
-            int b = (int) sigma.charAt(2);
+            int a = (int) Sigma.charAt(0);
+            int b = (int) Sigma.charAt(2);
             int i = 0;
             for (int x = a; x <= b; x++) {
 
-                automataFinito.sigma.add((char) x);
-                System.out.println(automataFinito.sigma.get(i));
+                sigma.add((char) x);
+                System.out.println(sigma.get(i));
                 i++;
             }
         }

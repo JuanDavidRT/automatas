@@ -6,6 +6,7 @@
 package Automata;
 
 import Controller.AFDController;
+import Controller.AFNController;
 import Controller.ArchivoController;
 import Entity.AutomataFinito;
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ import java.util.Scanner;
 public class Automatas {
 
     public static AFDController afdController;
+     public static AFNController afnController;
     public static ArchivoController archivoController;
     public static AutomataFinito automataFinito;
     /**
@@ -34,6 +36,7 @@ public class Automatas {
     public static void main(String[] args) {
         // TODO code application logic here
         afdController= new AFDController();
+         afnController= new AFNController();
         archivoController = new ArchivoController();
         automataFinito= new AutomataFinito();
         
@@ -110,7 +113,41 @@ public class Automatas {
                         break;
                     case 3:
                         System.out.println("Autómata no determinista");
-                       // afdController.generarSigma();
+                        System.out.println("Por favor ingrese manualmente el automata");
+                        afnController.crearAutomata();
+                        System.out.println("Automáta correctamente creado");
+                        archivoController.generarArchivo(automataFinito);
+                        System.out.println("Por favor elija entre las opciones:");
+                        System.out.println("1. Procesar cadena");
+                        System.out.println("2. Procesar cadena con detalle");
+                        System.out.println("3. Procesar lista de cadenas");
+                        optionIn = sn.nextInt();
+                        switch (optionIn) {
+                            case 1:
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
+                                cadena=sn.next();
+                                result = afnController.procesarCadena(cadena);
+                                if (result) {
+                                    System.out.println("La cadena es aceptada");
+                                } else {
+                                    System.out.println("La cadena NO es aceptada");
+                                }
+                                break;
+                                case 2:
+                                    System.out.println("Por favor ingrese la cadena a evaluar:");
+                                 cadena=sn.next();
+                                result = afnController.procesarCadenaConDetalle(cadena);
+                                if (result) {
+                                    System.out.println("La cadena es aceptada");
+                                } else {
+                                    System.out.println("La cadena NO es aceptada");
+                                }
+                                break;
+                                 case 3:
+                                result = afnController.procesarListaDeCadenas();
+                                
+                                break;
+                        }
                         break;
                     case 4:
                         System.out.println("Autómata lambda no determinista");
