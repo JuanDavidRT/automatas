@@ -115,8 +115,8 @@ public class Automatas {
                         System.out.println("Autómata no determinista");
                         System.out.println("Por favor ingrese manualmente el automata");
                         afnController.crearAutomata();
-                        System.out.println("Automáta correctamente creado");
-                        archivoController.generarArchivo(automataFinito);
+//                        System.out.println("Automáta correctamente creado");
+//                        archivoController.generarArchivo(automataFinito);
                         System.out.println("Por favor elija entre las opciones:");
                         System.out.println("1. Procesar cadena");
                         System.out.println("2. Procesar cadena con detalle");
@@ -151,6 +151,39 @@ public class Automatas {
                         break;
                     case 4:
                         System.out.println("Autómata lambda no determinista");
+                        System.out.println("Autómata no determinista");
+                        afnController.generarAutomata();
+//                        System.out.println("Automáta correctamente creado");
+//                        archivoController.generarArchivo(automataFinito);
+                        System.out.println("Por favor elija entre las opciones:");
+                        System.out.println("1. Procesar cadena");
+                        System.out.println("2. Procesar cadena con detalle");
+                        System.out.println("3. Procesar lista de cadenas");
+                        optionIn = sn.nextInt();
+                        switch (optionIn) {
+                            case 1:
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
+                                cadena=sn.next();
+                                result = afnController.procesarCadena(cadena);
+                                if (result) {
+                                    System.out.println("La cadena es aceptada");
+                                } else {
+                                    System.out.println("La cadena NO es aceptada");
+                                }
+                                break;
+                                case 2:
+                                    System.out.println("Por favor ingrese la cadena a evaluar:");
+                                 cadena=sn.next();
+                                result = afnController.procesarCadenaConDetalle(cadena);
+                                if (result) {
+                                    System.out.println("La cadena es aceptada");
+                                } else {
+                                    System.out.println("La cadena NO es aceptada");
+                                }
+                                break;
+                                 case 3:
+                                result = afnController.procesarListaDeCadenas();
+                                
                         break;
                     case 5:
                         exit = true;
@@ -160,7 +193,9 @@ public class Automatas {
                     default:
                         System.out.println("Solo números entre 1 y 5");
                 }
-            } catch (InputMismatchException e) {
+            }
+            }
+            catch (InputMismatchException e) {
                 System.out.println("Debes insertar un número");
                 sn.next();
             }
