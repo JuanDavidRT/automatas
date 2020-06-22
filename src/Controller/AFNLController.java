@@ -9,6 +9,6 @@ package Controller;
  *
  * @author leons
  */
-public class AFNLController {
+public class AFNLController extends AFNController {
     
 }
