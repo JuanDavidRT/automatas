@@ -7,6 +7,7 @@ package Automata;
 
 import Controller.AFDController;
 import Controller.AFNController;
+import Controller.AFNLController;
 import Controller.ArchivoController;
 import Entity.AutomataFinito;
 import java.io.BufferedReader;
@@ -18,14 +19,11 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- *
- * @author Darkluiggi
- */
 public class Automatas {
 
     public static AFDController afdController;
-     public static AFNController afnController;
+    public static AFNController afnController;
+    public static AFNLController afnLController;
     public static ArchivoController archivoController;
     public static AutomataFinito automataFinito;
     /**
@@ -36,7 +34,8 @@ public class Automatas {
     public static void main(String[] args) {
         // TODO code application logic here
         afdController= new AFDController();
-         afnController= new AFNController();
+        afnController= new AFNController();
+        afnLController= new AFNLController();
         archivoController = new ArchivoController();
         automataFinito= new AutomataFinito();
         
@@ -65,20 +64,16 @@ public class Automatas {
                     case 1:
                         System.out.println("Ingrese la ruta del archivo .txt:");
                         String ruta = sn.next();
-                         archivoController.leerArchivo(ruta);
+                        automataFinito = archivoController.leerArchivo(ruta);
                        
-//                        System.out.println("Autómata xxx");
-//                        System.out.println("Escribe una de las opciones");
-//                        System.out.println("1.Procesar Cadena");
-//                        System.out.println("2.Procesar Cadena con detalles");
-//                        System.out.println("3.Procesar lista de cadenas");
+
                         break;
                     case 2:
                         System.out.println("Autómata determinista");
                         System.out.println("Por favor ingrese manualmente el automata");
                         afdController.crearAutomata();
                         System.out.println("Automáta correctamente creado");
-                        archivoController.generarArchivo(automataFinito);
+                        //archivoController.generarArchivo(automataFinito);
                         System.out.println("Por favor elija entre las opciones:");
                         System.out.println("1. Procesar cadena");
                         System.out.println("2. Procesar cadena con detalle");
@@ -115,8 +110,8 @@ public class Automatas {
                         System.out.println("Autómata no determinista");
                         System.out.println("Por favor ingrese manualmente el automata");
                         afnController.crearAutomata();
-//                        System.out.println("Automáta correctamente creado");
-//                        archivoController.generarArchivo(automataFinito);
+                        System.out.println("Automáta correctamente creado");
+                        //archivoController.generarArchivo(automataFinito);
                         System.out.println("Por favor elija entre las opciones:");
                         System.out.println("1. Procesar cadena");
                         System.out.println("2. Procesar cadena con detalle");
@@ -151,10 +146,10 @@ public class Automatas {
                         break;
                     case 4:
                         System.out.println("Autómata lambda no determinista");
-                        System.out.println("Autómata no determinista");
-                        afnController.generarAutomata();
-//                        System.out.println("Automáta correctamente creado");
-//                        archivoController.generarArchivo(automataFinito);
+
+                        System.out.println("Por favor ingrese manualmente el automata");
+                        afnLController.crearAutomata();
+                        System.out.println("Automáta correctamente creado");
                         System.out.println("Por favor elija entre las opciones:");
                         System.out.println("1. Procesar cadena");
                         System.out.println("2. Procesar cadena con detalle");
@@ -165,6 +160,9 @@ public class Automatas {
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
                                 cadena=sn.next();
                                 result = afnController.procesarCadena(cadena);
+
+                                result = afnLController.procesarCadena(cadena);
+
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
                                 } else {
@@ -184,6 +182,9 @@ public class Automatas {
                                  case 3:
                                 result = afnController.procesarListaDeCadenas();
                                 
+                                break;
+                        }
+
                         break;
                     case 5:
                         exit = true;
