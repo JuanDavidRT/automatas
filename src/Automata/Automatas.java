@@ -146,6 +146,7 @@ public class Automatas {
                         break;
                     case 4:
                         System.out.println("Autómata lambda no determinista");
+
                         System.out.println("Por favor ingrese manualmente el automata");
                         afnLController.crearAutomata();
                         System.out.println("Automáta correctamente creado");
@@ -158,7 +159,10 @@ public class Automatas {
                             case 1:
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
                                 cadena=sn.next();
+                                result = afnController.procesarCadena(cadena);
+
                                 result = afnLController.procesarCadena(cadena);
+
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
                                 } else {
@@ -168,7 +172,7 @@ public class Automatas {
                                 case 2:
                                     System.out.println("Por favor ingrese la cadena a evaluar:");
                                  cadena=sn.next();
-                                result = afnLController.procesarCadenaConDetalle(cadena);
+                                result = afnController.procesarCadenaConDetalle(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
                                 } else {
@@ -176,10 +180,11 @@ public class Automatas {
                                 }
                                 break;
                                  case 3:
-                                //result = afnLController.procesarListaDeCadenas();
+                                result = afnController.procesarListaDeCadenas();
                                 
                                 break;
                         }
+
                         break;
                     case 5:
                         exit = true;
@@ -189,7 +194,9 @@ public class Automatas {
                     default:
                         System.out.println("Solo números entre 1 y 5");
                 }
-            } catch (InputMismatchException e) {
+            }
+            }
+            catch (InputMismatchException e) {
                 System.out.println("Debes insertar un número");
                 sn.next();
             }
