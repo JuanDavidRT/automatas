@@ -291,5 +291,10 @@ public class AFNController extends AutomataFinito {
             }
         }
     }
+    public void metodop(){
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+        }
+    }
 // fin de Clase
 }

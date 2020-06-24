@@ -1,0 +1,78 @@
+* [33mb4304c9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mcesaineam[m[33m)[m Corrección conflicto mal solucionado (sintaxis)
+*   [33m5982ad5[m Merge pull request #7 from JuanDavidRT/luiggi
+[32m|[m[33m\[m  
+[32m|[m *   [33m16ffe26[m[33m ([m[1;31morigin/luiggi[m[33m)[m Merge branch 'master' into luiggi
+[32m|[m [34m|[m[32m\[m  
+[32m|[m [34m|[m[32m/[m  
+[32m|[m[32m/[m[34m|[m   
+* [34m|[m   [33md4c5c00[m Merge pull request #6 from JuanDavidRT/juand
+[36m|[m[1;31m\[m [34m\[m  
+[36m|[m * [34m|[m [33m3b75cc5[m[33m ([m[1;31morigin/juand[m[33m)[m AFN Lambda agregado con metodos sencillos sin todos los procesamientos posibles
+[36m|[m[36m/[m [34m/[m  
+* [34m|[m   [33m08e9486[m Merge pull request #5 from AndresBonillaD/master
+[1;32m|[m[1;33m\[m [34m\[m  
+[1;32m|[m * [34m\[m   [33me20a696[m resuelto conflicto guardando los cambios
+[1;32m|[m [1;34m|[m[1;32m\[m [34m\[m  
+[1;32m|[m [1;34m|[m[1;32m/[m [34m/[m  
+[1;32m|[m[1;32m/[m[1;34m|[m [34m|[m   
+* [1;34m|[m [34m|[m [33mf687fa3[m Agregadas las clases Procesamiento de cadena, correspondientes a la p… (#4)
+[1;35m|[m * [34m|[m [33m1a769cc[m se elimino la clase AutomataController que no contenia nada de utilidad y se extendio AFNController como padre de AFNLController
+[1;35m|[m * [34m|[m [33mbd41f41[m agregadas las clases Procesamiento de cadena, correspondientes a la primera entrega
+[1;35m|[m[1;35m/[m [34m/[m  
+* [34m|[m [33m7d902a3[m Update readme
+[1;35m|[m * [33m45f43be[m cambios en AFN
+[1;35m|[m[1;35m/[m  
+* [33m8300ff4[m cambios para extender el automata finito a los controllers, usando la herencia, creado un posible método para procesar cadena no determinista
+* [33m6f05be8[m Metodo para guardar automara en archivo 0.1
+*   [33mbf937e4[m Correcciones de formato luego de leer el codigo, ningun metodo modificado o agregado 2
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33m05d4d26[m agregados los cambios para aplicar la arquitectura del padre en afdController
+[1;36m|[m *   [33m3831ad0[m Merge pull request #3 from AndresBonillaD/master
+[1;36m|[m [32m|[m[33m\[m  
+[1;36m|[m [32m|[m * [33m105cdb3[m se agrego extends a la definicion de la clase, ahora AFDController es hijo de AutomataFinito
+[1;36m|[m [32m|[m[32m/[m  
+* [32m/[m [33m25e8396[m Correcciones de formato luego de leer el codigo, ningun metodo modificado o agregado
+[32m|[m[32m/[m  
+*   [33m37fe5ef[m Merge pull request #2 from AndresBonillaD/master
+[34m|[m[35m\[m  
+[34m|[m *   [33madb905d[m Reuslto conflicto en lectura de la funcion delta
+[34m|[m [36m|[m[34m\[m  
+[34m|[m [36m|[m[34m/[m  
+[34m|[m[34m/[m[36m|[m   
+* [36m|[m [33mc483d13[m Lista las transiciones de afn, falta el procesamiento
+[1;31m|[m * [33m6d1c5d6[m cambios iniciales ArchivoController
+[1;31m|[m[1;31m/[m  
+* [33m632ddbf[m eliminado hard code para procesar lista de cadenas, ya se pasan las cadenas manualmente
+* [33m7be2658[m agregado metodo para crear manualmente el AFD con la opción 2 del menú, después de crearlo se ven las opciones y se llaman los métodos correctamente para computar la aceptación
+* [33m4787eec[m Listo archivo controller con objeto
+* [33macbe644[m agregadoun error en el constructor de automata
+* [33m2ac8332[m arreglado problema de ler archivo
+* [33m346e3e1[m creada la logica para que el archivo sea leido y devuelva un nuevo controlador con el automata ya construido.
+* [33m5fcc03b[m arreglado archivocontroller para que lea una ruuta de archivo y devuelva un automata, implementado en main, falta la lógica para que a partir de ahí procese afd,afn o afn lambda
+* [33mc989251[m arreglado de vuelta lo de leer archivos, ahora el método devuelve un automata para su manejo y está en un controlador aparte
+* [33m6f33161[m .
+* [33m7fc070d[m se realizo la consolidacion de arquitectura bajo MVC, se añadio View (carpeta de interfaz), se establecio la clase padre y la relacion de herencia entre AutomataFinito y AFDEntity y se añadio un metodo a controller para crear AFDEntity
+* [33mac190d2[m Add files via upload
+* [33m143ec2d[m agregado método para asignar sigma, ya lo testeé y funciona perfecto, lo testee con los 3 ejemplos que tengp en el codigo, para probarla está en el menú 2 AFN
+* [33m32b26fb[m cambio de las bariables en entidad AFD a camelCase
+* [33m3cbee6d[m Cambio de varaibles y algunos comentarios
+* [33mc8150ab[m Se hacen los cambios de variables array y se capturan los estados
+* [33mebe2d1f[m Agregado método procesar lista de cadenas
+* [33me70c5c2[m Se hace lectura parcial del archivo
+*   [33m3c843c7[m Merge pull request #1 from AndresBonillaD/master
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33m4bbd221[m Se añadio a la arquitectura la carpeta Test
+[1;32m|[m[1;32m/[m  
+*   [33m4f59f2c[m Merge origin/master
+[1;34m|[m[1;35m\[m  
+[1;34m|[m * [33me3f5a83[m Update AFDController.java
+* [1;35m|[m [33md2c6d5e[m Creado menú principal, (faltan ajustes) y los métodos para afd y afd con detalles funcionando
+[1;35m|[m[1;35m/[m  
+* [33m7de5ef0[m comentarios a los metodos
+* [33me7b5550[m Creado método que lee cadenas binarias en lenguaje a,b para el AFD, co un automata finito y hard-coded
+* [33md2c9840[m Creadas entidades
+*   [33m653889f[m Merge origin/master
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33m50b45c5[m Create readme
+* [33m71b5640[m Creada arquitectura
+* [33mb7104b5[m Creada arquitectura
