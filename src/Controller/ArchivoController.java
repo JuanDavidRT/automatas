@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import static Automata.Automatas.automataFinito;
 import Entity.AutomataFinito;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  *
@@ -24,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class ArchivoController {
 
-    AutomataFinito automataFinito = new AutomataFinito();
+    
     int countf = 0;
     int contc = 0;
     List<String> lineasArchivo = new ArrayList<>();
@@ -33,12 +37,29 @@ public class ArchivoController {
 
     }
 
+    
+    public String leerTipo(String ruta ) throws IOException{
+        String tipo;        
+        File archivo = null;
+        archivo = new File(ruta);
+        
+        BufferedReader br = new BufferedReader(new FileReader(archivo));        
+        tipo = br.readLine();
+        
+        
+        
+    return tipo;
+    }
+    
     //leer arvho 
     public AutomataFinito leerArchivo(String ruta) {
-
+        
+        AutomataFinito automatafinito = new AutomataFinito();
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
+        
+        
 
         //Se lee las lineas del archivo y se extraen los datos
         try {
@@ -52,7 +73,7 @@ public class ArchivoController {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                System.out.println(linea);
+                //System.out.println(linea);
                 lineasArchivo.add(linea); // añade archivo a la lista 
             }
 
@@ -76,20 +97,27 @@ public class ArchivoController {
         //se leen las string en la lista
         for (int i = 0; i < lineasArchivo.size(); i++) {
 
-            // de determina que tipo de Auotomata contiene el archivo con la primera linea
+            //lectura de la primera linea del archivo
             if (i == 0) {
                 if (lineasArchivo.get(0).equals("#!dfa")) {
                     System.out.println("-----  AFD  -----");
+                    AFDController afd = new AFDController();        // crea un objeto AFD
                 } else if (lineasArchivo.get(0).equals("#!nfa")) {
                     System.out.println("-----  AFN  -----");
+                    AFNController afn = new AFNController();
                 } else if (lineasArchivo.get(0).equals("#!nfe")) {
                     System.out.println("-----  AFNL  ------");
+                    AFNLController afdl = new AFNLController();
                 } else {
                     System.out.println("----  ¡Archivo no aceptado!  ------- ");
 
                 }
             }
 
+            
+            
+            
+            
             //seccion que genera los alfabetos
             if (lineasArchivo.get(i).equals("#alphabet")) {
                 System.out.println("Generando alfabeto ..."); 
@@ -177,7 +205,17 @@ public class ArchivoController {
     // Genera la funcion de transicion liena por linea
     public void generartransitions(String lineaTransitions){
         System.out.println("generar transitons...");
-        System.out.println("-- " + lineaTransitions + " --");
+        System.out.println("-- " + lineaTransitions + " --");               
+        
+        String regex = "[^\\t\\n\\ ]*:[^\\n\\t]>[^\\n\\t]*|;";
+        
+        
+        Pattern tratitionRegex = Pattern.compile(regex);          //regex
+        Matcher m = tratitionRegex.matcher(lineaTransitions);
+        
+        boolean coincidencia = m.find();
+        System.out.println("-- liena aceptada??? " + coincidencia);               
+        
         
     }
     

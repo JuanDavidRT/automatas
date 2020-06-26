@@ -31,7 +31,7 @@ public class Automatas {
      */
    
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         afdController= new AFDController();
         afnController= new AFNController();
@@ -64,6 +64,7 @@ public class Automatas {
                     case 1:
                         System.out.println("Ingrese la ruta del archivo .txt:");
                         String ruta = sn.next();
+                        //System.out.println(archivoController.leerTipo(ruta));
                         automataFinito = archivoController.leerArchivo(ruta);
                        
 
