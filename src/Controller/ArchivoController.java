@@ -101,13 +101,13 @@ public class ArchivoController {
             if (i == 0) {
                 if (lineasArchivo.get(0).equals("#!dfa")) {
                     System.out.println("-----  AFD  -----");
-                    AFDController afd = new AFDController();        // crea un objeto AFD
+                    
                 } else if (lineasArchivo.get(0).equals("#!nfa")) {
                     System.out.println("-----  AFN  -----");
-                    AFNController afn = new AFNController();
+                   
                 } else if (lineasArchivo.get(0).equals("#!nfe")) {
                     System.out.println("-----  AFNL  ------");
-                    AFNLController afdl = new AFNLController();
+                   
                 } else {
                     System.out.println("----  ¡Archivo no aceptado!  ------- ");
 
@@ -130,8 +130,10 @@ public class ArchivoController {
 
             if (lineasArchivo.get(i).equals("#states")) {
                 System.out.println("Capturando Estados Q ...");
+                
+                int index = 0;
                 while (!lineasArchivo.get(i + 1).equals("#initial") && i <= lineasArchivo.size()) {
-                    automataFinito.states.add(lineasArchivo.get(i + 1));
+                    automataFinito.states.add(lineasArchivo.get(i + 1));                    
                     System.out.println("-- " + lineasArchivo.get(i + 1) + " --");
 
                     i++;
@@ -169,34 +171,27 @@ public class ArchivoController {
     
     //interpreta y añade al alfabeto liena por linea 
     public void generarSigma(String lineaSigma) {
-
-        String alfabetoA = lineaSigma;
-        String type = new String();
-
-        for (int i = 0; i < alfabetoA.length(); i++) {
-            if (alfabetoA.charAt(i) == ',') {       // estas comas no están el los formatos admitidos
-                type = "lista";
-            } else if (alfabetoA.charAt(i) == '-') {
-                type = "intervalo";
-            }
-        }
-        if (type.equals("lista")) {
-            automataFinito.sigma.add(alfabetoA.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
-            System.out.println(automataFinito.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
-            automataFinito.sigma.add(alfabetoA.charAt(2));
-            System.out.println(automataFinito.sigma.get(1));
-            
-            
-            
-        } else if (type.equals("intervalo")) {
-
-            int a = (int) alfabetoA.charAt(0);  // toma valores ASCII de los esctremos del intervalo
-            int b = (int) alfabetoA.charAt(2);  
-            int i = 0;
-            for (int x = a; x <= b; x++) {          //ingresa caracteres al alfebeto
+        
+        String regex = "^([^\\n\\t\\$\\r])(-[^\\$\\ \\n\\t\\r])*";
+        Pattern sigmaPattern = Pattern.compile(regex);                  //genera un patron desde un regex
+        Matcher m = sigmaPattern.matcher(lineaSigma);                   //objeto Matcher
+ 
+        boolean coincidencia = m.find();                                //procesa las cadenas del archivo y determina si son aceptadas
+        //System.out.println("-- liena aceptada??? " + coincidencia); 
+        
+        if(coincidencia){
+            if(lineaSigma.length() > 1){
+                int a = (int) lineaSigma.charAt(0);                     // toma valores ASCII de los esctremos del intervalo
+                int b = (int) lineaSigma.charAt(2);  
+                int i = 0;
+                for (int x = a; x <= b; x++) {                          //ingresa caracteres al alfebeto
                 System.out.println("--  " + (char) x + " --");
                 automataFinito.sigma.add((char) x);                
-                i++;
+                i++;                
+                }        
+            }else{
+                char simbol = lineaSigma.charAt(0);
+                automataFinito.sigma.add(simbol);
             }
         }
     }
@@ -207,14 +202,26 @@ public class ArchivoController {
         System.out.println("generar transitons...");
         System.out.println("-- " + lineaTransitions + " --");               
         
-        String regex = "[^\\t\\n\\ ]*:[^\\n\\t]>[^\\n\\t]*|;";
+        
+        String regex = "^([^\\t\\n\\ \\:\\;\\>]*):([^\\n\\t\\ \\:\\>])>([^\\n\\t\\ \\:\\;>]+;)*([^\\n\\t\\ \\:\\;\\>]+)$";
+        Pattern trantitionPattern = Pattern.compile(regex);          //genera un patron desde un regex
+        Matcher m = trantitionPattern.matcher(lineaTransitions);       //objeto Matcher
+ 
+        boolean coincidencia = m.find();                                //procesa las cadenas del archivo y determina si son aceptadas
+        System.out.println("-- liena aceptada??? " + coincidencia);       
         
         
-        Pattern tratitionRegex = Pattern.compile(regex);          //regex
-        Matcher m = tratitionRegex.matcher(lineaTransitions);
-        
-        boolean coincidencia = m.find();
-        System.out.println("-- liena aceptada??? " + coincidencia);               
+        if (coincidencia){                                              //procesa la linea
+            String estateSimbolTrantitionsSplit [] = lineaTransitions.split(">");
+            
+            String estateSimbol [] = estateSimbolTrantitionsSplit[0].split(":"); 
+            String t [] = estateSimbolTrantitionsSplit[1].split(";");
+            
+            
+            
+        }else{
+            System.out.println("linea / archivo no aceptado");
+        }
         
         
     }
