@@ -159,9 +159,10 @@ public class ArchivoController {
             
             //necesita nueva funcion de lectura
             if (lineasArchivo.get(i).equals("#transitions")) {
+                System.out.println("generar transitons...");
                 System.out.println("Capturando funcion de tracicion Delta ...");                
                 for ( int j = i + 1 ; j < lineasArchivo.size(); j++) {
-                    generartransitions(lineasArchivo.get(j));
+                    generarTransitions(lineasArchivo.get(j));
                 }
             }
         }
@@ -193,13 +194,15 @@ public class ArchivoController {
                 char simbol = lineaSigma.charAt(0);
                 automataFinito.sigma.add(simbol);
             }
+        }else{
+            System.out.println("LINEA NO ACEPTADA!!!  " + lineaSigma);
         }
     }
     
     
     // Genera la funcion de transicion liena por linea
-    public void generartransitions(String lineaTransitions){
-        System.out.println("generar transitons...");
+    public void generarTransitions(String lineaTransitions){
+        
         System.out.println("-- " + lineaTransitions + " --");               
         
         
@@ -208,17 +211,50 @@ public class ArchivoController {
         Matcher m = trantitionPattern.matcher(lineaTransitions);       //objeto Matcher
  
         boolean coincidencia = m.find();                                //procesa las cadenas del archivo y determina si son aceptadas
-        System.out.println("-- liena aceptada??? " + coincidencia);       
+              
         
         
-        if (coincidencia){                                              //procesa la linea
-            String estateSimbolTrantitionsSplit [] = lineaTransitions.split(">");
-            
-            String estateSimbol [] = estateSimbolTrantitionsSplit[0].split(":"); 
-            String t [] = estateSimbolTrantitionsSplit[1].split(";");
+        if (coincidencia){                                                          
             
             
+            String estateSimbol_TrantitionsSplit [] = lineaTransitions.split(">");      //separa la linea para guardar la info          
+            String stateSimbol [] = estateSimbol_TrantitionsSplit[0].split(":");    // estateSimbol tiene el estado de la unidad de cotrol y simbolo                         
+            String transitions [] = estateSimbol_TrantitionsSplit[1].split(";");               //transiciones individiales
             
+            int fila = 0;
+            int columna = 0;
+            boolean estadoPertenece = false;
+            boolean simboloPertenece = false;
+            
+            for (int i = 0 ; i < automataFinito.sigma.size(); i++){
+                
+                //System.out.println(stateSimbol[1].charAt(0) + " " + automataFinito.sigma.get(i));
+                
+                
+                if(stateSimbol[1].charAt(0) == automataFinito.sigma.get(i)){
+                    fila = automataFinito.sigma.indexOf(i);
+                    simboloPertenece = true;
+                }                
+            }
+            
+            for (int i = 0; i < automataFinito.states.size(); i++){
+                if( stateSimbol[0].equals(automataFinito.states.get(i)) ){
+                    columna = automataFinito.states.indexOf(i);
+                    estadoPertenece = true;
+                    }
+                }
+            
+            
+            if(simboloPertenece && estadoPertenece){
+                System.out.println("[" + fila + "," + columna + "]");
+            }else if(!simboloPertenece){
+                System.out.println("SIMBOLO NO PERTENECE");
+            }else if(!estadoPertenece){
+                System.out.println("ESTADO NO PERTENECE");
+            }
+            
+            
+                                
         }else{
             System.out.println("linea / archivo no aceptado");
         }
