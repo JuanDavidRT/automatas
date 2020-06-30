@@ -109,7 +109,7 @@ public class Automatas {
                     case 3:
                         System.out.println("Autómata no determinista");
                         System.out.println("Por favor ingrese manualmente el automata");
-                        afnController.crearAutomata();
+                        afnController.generarAutomata();
                         System.out.println("Automáta correctamente creado");
                         //archivoController.generarArchivo(automataFinito);
                         System.out.println("Por favor elija entre las opciones:");
