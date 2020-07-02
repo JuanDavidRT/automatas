@@ -121,7 +121,7 @@ public class Automatas {
                             case 1:
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
                                 cadena=sn.next();
-                                result = afnController.procesarCadena(cadena);
+                                result = afnController.procesarCadenaasd(cadena,afnController.initialState);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
                                 } else {
@@ -159,7 +159,7 @@ public class Automatas {
                             case 1:
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
                                 cadena=sn.next();
-                                result = afnController.procesarCadena(cadena);
+                                result = afnController.procesarCadenaasd(cadena,afnController.initialState);
 
                                 result = afnLController.procesarCadena(cadena);
 

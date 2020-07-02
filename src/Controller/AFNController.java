@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Entity.AutomataAFN;
 import Entity.AutomataFinito;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,29 +20,39 @@ import java.util.Scanner;
  * usuario) y Entity (Model en MVC, que maneja las entidades, objetos, atributos
  * y metodos)
  */
-public class AFNController extends AutomataFinito {
-
-    int countf = 0;
-    int contc = 0;
-    List<String> lineasArchivo = new ArrayList<>();
-    List<String> multi = new ArrayList<>();
-    List<String> posibles = new ArrayList<>();
-    Scanner sn = new Scanner(System.in);
-
-    public AFNController() {
-
+public class AFNController  {
+        String inicial;
+        AutomataAFN automata = new AutomataAFN(inicial);
+    
+    public AFNController(String inicial) {
+        this.inicial =inicial;
+        
     }
+    
+    public void CrearAutomataAMano()
+        {
+            
+            automata.AgregarEstado("q1");
+            automata.AgregarEstado("q2");
+            automata.AgregarEstado("q3");
 
-    public AFNController(AutomataFinito automata) {
-        sigma = automata.sigma;
-        acceptanceStates = automata.acceptanceStates;
-        states = automata.states;
-        initialState = automata.initialState;
-        transition = automata.transition;
-    }
+            Estado estadoQ0 = automata.GetEstadoByNombre("q0");
+            Estado estadoQ1 = automata.GetEstadoByNombre("q1");
+            Estado estadoQ2 = automata.GetEstadoByNombre("q2");
+            Estado estadoQ3 = automata.GetEstadoByNombre("q3");
+
+            estadoQ0.AgregarTransicion("a", estadoQ1);
+            estadoQ0.AgregarTransicion("a", estadoQ3);
+            estadoQ0.AgregarTransicion("b", estadoQ2);
+            estadoQ1.AgregarTransicion("a", estadoQ3);
+        }
+
+     public boolean procesarCadena(String Cadena, Estado estadoActual){
+         return false;
+     }
 
     //metodo para crear un AFDEntity HARCODED
-    public void crearAutomata() {
+    /*public void crearAutomata() {
 
         // inicializa
         String read;
@@ -111,7 +122,7 @@ public class AFNController extends AutomataFinito {
         /*transition[1][0][1] = "q2";
         transition[2][1][0] = "q1";
         transition[2][1][1] = "q2";
-        transition[3][1][1] = "q1";*/
+        transition[3][1][1] = "q1";
         for (int i = 0; i < states.size(); i++) {
             for (int j = 0; j < sigma.size(); j++) {
                 if(transition[i][j][0]!= null &&transition[i][j][1]!= null){
@@ -139,12 +150,15 @@ public class AFNController extends AutomataFinito {
                 if(buffer.equals(multi.get(j))){
                     for (int k = 0; k < states.size(); k++) {
                         buffer= procesarTransicionafn(transition, buffer, read,k); 
+                        
                         result = false;           //reinicializo en false para cada iteración
                         for (int p = 0; p < acceptanceStates.size(); p++) {
                             if (buffer.equals(acceptanceStates.get(p))) {
                             result = true;                                // dice si es aceptado o no
                             }
                            }
+                        String resto = cadena.substring(i, cadena.length());
+                        procesarCadenaasd(resto,buffer);
                     }
                    
                 } else {
@@ -304,6 +318,6 @@ public class AFNController extends AutomataFinito {
         for (int i = 0; i < 10; i++) {
             System.out.println(i);
         }
-    }
+    }*/
 // fin de Clase
 }
