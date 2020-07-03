@@ -15,10 +15,11 @@ import java.util.List;
 public class Estado {
 
     public String nombre;
-    public List<Transicion> Transiciones;
+    public List<Transicion> Transiciones ;
 
     public Estado(String nombre) {
         this.nombre = nombre;
+        Transiciones = new ArrayList<>();
     }
 
     public void AgregarTransicion(String caracter, Estado estadoDestino) {

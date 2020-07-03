@@ -14,6 +14,7 @@ public class Transicion {
     public Estado EstadosDestino;
 
     public Transicion(String sigma, Estado estadosDestino){
+        
         this.Sigma = sigma;
         this.EstadosDestino = estadosDestino;
     } 
