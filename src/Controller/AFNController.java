@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Entity.AutomataFinito;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,7 +19,7 @@ public class AFNController extends AutomataFinito {
     Scanner sn = new Scanner(System.in);
 
     public AFNController() {
-       
+
     }
 
     public AFNController(AutomataFinito automata) {
@@ -104,33 +96,33 @@ public class AFNController extends AutomataFinito {
             char read = cadena.charAt(i);
             bufferList = procesarTransicionesPosibles(transition, buffer, read);//procesa el caracter que está en la posicion de i del string
             for (int j = 0; j < bufferList.size(); j++) {
-                 buffer = procesarTransicion(transition, buffer, read);
-                 result = false;                       //reinicializo en false para cada iteración
+                buffer = procesarTransicion(transition, buffer, read);
+                result = false;                       //reinicializo en false para cada iteración
                 for (int k = 0; k < acceptanceStates.size(); k++) {
-                  if (buffer.equals(acceptanceStates.get(k))) {
-                      result = true;                                // dice si es aceptado o no
-                  }
-                 }
-             }
-            
+                    if (buffer.equals(acceptanceStates.get(k))) {
+                        result = true;                                // dice si es aceptado o no
+                    }
+                }
+            }
+
         }
         return result;
     }
 
     public ArrayList<String> procesarTransicionesPosibles(String[][][] transicion, String buffer, char read) {
         String bufferResult = new String();
-        ArrayList<String> list= new ArrayList();
+        ArrayList<String> list = new ArrayList();
         for (int i = 0; i < states.size(); i++) {               //un loop para la cantidad de estados
             if (buffer.equals(states.get(i))) {               //si el estado actual buffer es igual a un estado en el automata ocntinua
 
                 for (int j = 0; j < sigma.size(); j++) {      //loop para el alfabeto
-                    if (read == sigma.get(j)) { 
+                    if (read == sigma.get(j)) {
                         for (int k = 0; k < states.size(); k++) {
                             bufferResult = transicion[i][j][k];
                             list.add(bufferResult);
                         }
-                                                                            //si el caracter es igual a la posición de sigma entra, 
-                            //teniendo en cuenta que en el array de transicion la primera columna son los estados
+                        //si el caracter es igual a la posición de sigma entra, 
+                        //teniendo en cuenta que en el array de transicion la primera columna son los estados
                         //y la segunda columna el alfabeto
                     }
                 }
@@ -138,6 +130,7 @@ public class AFNController extends AutomataFinito {
         }
         return list;
     }
+
     public String procesarTransicion(String[][][] transicion, String buffer, char read) {
         String bufferResult = new String();
         for (int i = 0; i < states.size(); i++) {               //un loop para la cantidad de estados
@@ -146,7 +139,7 @@ public class AFNController extends AutomataFinito {
                 for (int j = 0; j < sigma.size(); j++) {      //loop para el alfabeto
                     if (read == sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
                         bufferResult = transicion[i][j][0];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
-                                                               //y la segunda columna el alfabeto
+                        //y la segunda columna el alfabeto
                     }
                 }
             }
@@ -256,5 +249,4 @@ public class AFNController extends AutomataFinito {
             }
         }
     }
-// fin de Clase
 }

@@ -6,9 +6,6 @@
 package Controller;
 
 import Entity.AutomataFinito;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +18,7 @@ public class AFDController extends AutomataFinito {
     Scanner sn = new Scanner(System.in);
 
     public AFDController() {
-           }
+    }
 
     public AFDController(AutomataFinito automata) {
         sigma = automata.sigma;
@@ -99,7 +96,7 @@ public class AFDController extends AutomataFinito {
                 for (int j = 0; j < sigma.size(); j++) {      //loop para el alfabeto
                     if (read == sigma.get(j)) {                 //si el caracter es igual a la posición de sigma entra, 
                         bufferResult = transicion[i][j][0];    //teniendo en cuenta que en el array de transicion la primera columna son los estados
-                                                               //y la segunda columna el alfabeto
+                        //y la segunda columna el alfabeto
                     }
                 }
             }
@@ -207,5 +204,4 @@ public class AFDController extends AutomataFinito {
             }
         }
     }
-// fin de Clase
 }

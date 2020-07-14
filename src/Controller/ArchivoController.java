@@ -9,14 +9,11 @@ import Entity.AutomataFinito;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.PrintWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -71,8 +68,6 @@ public class ArchivoController {
             }
         }
 
-        
-        
         //se leen las string en la lista
         for (int i = 0; i < lineasArchivo.size(); i++) {
 
@@ -92,7 +87,7 @@ public class ArchivoController {
 
             //seccion que genera los alfabetos
             if (lineasArchivo.get(i).equals("#alphabet")) {
-                System.out.println("Generando alfabeto ..."); 
+                System.out.println("Generando alfabeto ...");
                 while (!lineasArchivo.get(i + 1).equals("#states") && i <= lineasArchivo.size()) {
                     generarSigma(lineasArchivo.get(i + 1));
                     i++;
@@ -126,11 +121,11 @@ public class ArchivoController {
                 }
 
             }
-            
+
             //necesita nueva funcion de lectura
             if (lineasArchivo.get(i).equals("#transitions")) {
-                System.out.println("Capturando funcion de tracicion Delta ...");                
-                for ( int j = i + 1 ; j < lineasArchivo.size(); j++) {
+                System.out.println("Capturando funcion de tracicion Delta ...");
+                for (int j = i + 1; j < lineasArchivo.size(); j++) {
                     generartransitions(lineasArchivo.get(j));
                 }
             }
@@ -138,7 +133,6 @@ public class ArchivoController {
         return automataFinito;
     }
 
-    
     //interpreta y añade al alfabeto liena por linea 
     public void generarSigma(String lineaSigma) {
 
@@ -157,30 +151,26 @@ public class ArchivoController {
             System.out.println(automataFinito.sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
             automataFinito.sigma.add(alfabetoA.charAt(2));
             System.out.println(automataFinito.sigma.get(1));
-            
-            
-            
+
         } else if (type.equals("intervalo")) {
 
             int a = (int) alfabetoA.charAt(0);  // toma valores ASCII de los esctremos del intervalo
-            int b = (int) alfabetoA.charAt(2);  
+            int b = (int) alfabetoA.charAt(2);
             int i = 0;
             for (int x = a; x <= b; x++) {          //ingresa caracteres al alfebeto
                 System.out.println("--  " + (char) x + " --");
-                automataFinito.sigma.add((char) x);                
+                automataFinito.sigma.add((char) x);
                 i++;
             }
         }
     }
-    
-    
+
     // Genera la funcion de transicion liena por linea
-    public void generartransitions(String lineaTransitions){
+    public void generartransitions(String lineaTransitions) {
         System.out.println("generar transitons...");
         System.out.println("-- " + lineaTransitions + " --");
-        
+
     }
-    
 
     public void generarArchivo(AutomataFinito automata) {
         final Formatter x;
@@ -227,14 +217,11 @@ public class ArchivoController {
                 pw.println(automata.acceptanceStates.get(i));
             }
             pw.println("#transitions");
-            
+
             pw.close();
             System.out.println("Archivo creado exitosamente");
         } catch (IOException ex) {
             System.out.println("El archivo no se ha podido guardar");
         }
     }
-  
-    
-//classEnd    
 }

@@ -141,7 +141,7 @@ public class AFNLController extends AFNController {
     public String procesarTransicion(ArrayList<String[]> tran2, String buffer, char read) {
         String bufferResult = new String();
         for (int i = 0; i < tran2.size(); i++) {
-            if ( buffer.equals(tran2.get(i)[0]) && String.valueOf(read).equals(tran2.get(i)[1])) {
+            if (buffer.equals(tran2.get(i)[0]) && String.valueOf(read).equals(tran2.get(i)[1])) {
                 bufferResult = tran2.get(i)[2];
                 break;
             }
@@ -169,7 +169,7 @@ public class AFNLController extends AFNController {
     public String procesarTransicionConDetalle(ArrayList<String[]> tran2, String buffer, char read) {
         String bufferResult = new String();
         for (int i = 0; i < tran2.size(); i++) {
-            if ( buffer.equals(tran2.get(i)[0]) && String.valueOf(read).equals(tran2.get(i)[1])) {
+            if (buffer.equals(tran2.get(i)[0]) && String.valueOf(read).equals(tran2.get(i)[1])) {
                 bufferResult = tran2.get(i)[2];
                 break;
             }
@@ -205,7 +205,7 @@ public class AFNLController extends AFNController {
             }
         }
     }
- /*   
+    /*   
 4
 0-1
 q0
@@ -225,5 +225,5 @@ q2
 1
 q0
 0
-*/
+     */
 }

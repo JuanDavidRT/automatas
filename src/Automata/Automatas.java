@@ -10,13 +10,7 @@ import Controller.AFNController;
 import Controller.AFNLController;
 import Controller.ArchivoController;
 import Entity.AutomataFinito;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Automatas {
@@ -26,26 +20,24 @@ public class Automatas {
     public static AFNLController afnLController;
     public static ArchivoController archivoController;
     public static AutomataFinito automataFinito;
+
     /**
      * @param args the command line arguments
      */
-   
 
     public static void main(String[] args) {
         // TODO code application logic here
-        afdController= new AFDController();
-        afnController= new AFNController();
-        afnLController= new AFNLController();
+        afdController = new AFDController();
+        afnController = new AFNController();
+        afnLController = new AFNLController();
         archivoController = new ArchivoController();
-        automataFinito= new AutomataFinito();
-        
-        
+        automataFinito = new AutomataFinito();
 
         Scanner sn = new Scanner(System.in);
         int option, optionIn;
         boolean exit = false;
-        boolean result=false;
-        String cadena= new String();
+        boolean result = false;
+        String cadena = new String();
         while (!exit) {
 
             System.out.println("Automatas");
@@ -65,7 +57,6 @@ public class Automatas {
                         System.out.println("Ingrese la ruta del archivo .txt:");
                         String ruta = sn.next();
                         automataFinito = archivoController.leerArchivo(ruta);
-                       
 
                         break;
                     case 2:
@@ -82,7 +73,7 @@ public class Automatas {
                         switch (optionIn) {
                             case 1:
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
-                                cadena=sn.next();
+                                cadena = sn.next();
                                 result = afdController.procesarCadena(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
@@ -90,9 +81,9 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
-                                case 2:
-                                    System.out.println("Por favor ingrese la cadena a evaluar:");
-                                 cadena=sn.next();
+                            case 2:
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
+                                cadena = sn.next();
                                 result = afdController.procesarCadenaConDetalle(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
@@ -100,9 +91,9 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
-                                 case 3:
+                            case 3:
                                 result = afdController.procesarListaDeCadenas();
-                                
+
                                 break;
                         }
                         break;
@@ -120,7 +111,7 @@ public class Automatas {
                         switch (optionIn) {
                             case 1:
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
-                                cadena=sn.next();
+                                cadena = sn.next();
                                 result = afnController.procesarCadena(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
@@ -128,9 +119,9 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
-                                case 2:
-                                    System.out.println("Por favor ingrese la cadena a evaluar:");
-                                 cadena=sn.next();
+                            case 2:
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
+                                cadena = sn.next();
                                 result = afnController.procesarCadenaConDetalle(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
@@ -138,9 +129,9 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
-                                 case 3:
+                            case 3:
                                 result = afnController.procesarListaDeCadenas();
-                                
+
                                 break;
                         }
                         break;
@@ -157,7 +148,7 @@ public class Automatas {
                         switch (optionIn) {
                             case 1:
                                 System.out.println("Por favor ingrese la cadena a evaluar:");
-                                cadena=sn.next();
+                                cadena = sn.next();
                                 result = afnLController.procesarCadena(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
@@ -165,9 +156,9 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
-                                case 2:
-                                    System.out.println("Por favor ingrese la cadena a evaluar:");
-                                 cadena=sn.next();
+                            case 2:
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
+                                cadena = sn.next();
                                 result = afnLController.procesarCadenaConDetalle(cadena);
                                 if (result) {
                                     System.out.println("La cadena es aceptada");
@@ -175,9 +166,9 @@ public class Automatas {
                                     System.out.println("La cadena NO es aceptada");
                                 }
                                 break;
-                                 case 3:
+                            case 3:
                                 //result = afnLController.procesarListaDeCadenas();
-                                
+
                                 break;
                         }
                         break;
@@ -185,7 +176,7 @@ public class Automatas {
                         exit = true;
                         break;
                     case 6: //solo para pruebas
-                        
+
                     default:
                         System.out.println("Solo números entre 1 y 5");
                 }
@@ -194,7 +185,5 @@ public class Automatas {
                 sn.next();
             }
         }
-
     }
-
 }
