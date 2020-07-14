@@ -189,12 +189,47 @@ public class Automatas {
                     case 5:
                         exit = true;
                         break;
-                    case 6: //solo para pruebas
+                    case 6: 
+                        System.out.println("Autómata determinista");
+                        afdController.generarAutomata();
+                        System.out.println("Automáta automáticamente creado");
+                        //archivoController.generarArchivo(automataFinito);
+                        System.out.println("Por favor elija entre las opciones:");
+                        System.out.println("1. Procesar cadena");
+                        System.out.println("2. Procesar cadena con detalle");
+                        System.out.println("3. Procesar lista de cadenas");
+                        optionIn = sn.nextInt();
+                        switch (optionIn) {
+                            case 1:
+                                System.out.println("Por favor ingrese la cadena a evaluar:");
+                                cadena=sn.next();
+                                result = afdController.procesarCadena(cadena);
+                                if (result) {
+                                    System.out.println("La cadena es aceptada");
+                                } else {
+                                    System.out.println("La cadena NO es aceptada");
+                                }
+                                break;
+                                case 2:
+                                    System.out.println("Por favor ingrese la cadena a evaluar:");
+                                 cadena=sn.next();
+                                result = afdController.procesarCadenaConDetalle(cadena);
+                                if (result) {
+                                    System.out.println("La cadena es aceptada");
+                                } else {
+                                    System.out.println("La cadena NO es aceptada");
+                                }
+                                break;
+                                 case 3:
+                                result = afdController.procesarListaDeCadenas();
+                                
+                                break;
+                        }
+                        break;
                         
                     default:
                         System.out.println("Solo números entre 1 y 5");
                 }
-            }
             }
             catch (InputMismatchException e) {
                 System.out.println("Debes insertar un número");

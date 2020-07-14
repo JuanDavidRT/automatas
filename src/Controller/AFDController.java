@@ -40,10 +40,17 @@ public class AFDController extends AutomataFinito {
         System.out.println("Ingrese el alfabeto");
         read = sn.next();
         generarSigma(read);
-
+        System.out.println(sigma);
+        
         System.out.println("Ingrese el estado inicial");
         read = sn.next();
         initialState = read;
+        
+         System.out.println("Ingrese la cantidad de estados");
+        quantity = sn.nextInt();
+        for (int i = 0; i < quantity; i++) {
+            states.add("q" + i);
+        }
 
         System.out.println("Ingrese la cantidad de estados de aceptación");
         quantity = sn.nextInt();
@@ -54,11 +61,7 @@ public class AFDController extends AutomataFinito {
             acceptanceStates.add(read);
         }
 
-        System.out.println("Ingrese la cantidad de estados");
-        quantity = sn.nextInt();
-        for (int i = 0; i < quantity; i++) {
-            states.add("q" + i);
-        }
+       
         transition = new String[states.size()][sigma.size()][1];
 
         System.out.println("Ingrese la función de transición");
@@ -157,12 +160,15 @@ public class AFDController extends AutomataFinito {
         for (int i = 0; i < Lista.size(); i++) {
             String buffer = initialState;
             String cadenabuffer = Lista.get(i);
+            int y=i+1;
+            System.out.println("Validando la cadena " + y);
             for (int j = 0; j < cadenabuffer.length(); j++) {  //un loop para leer la cadena de entrada
+                
                 char read = cadenabuffer.charAt(j);
                 buffer = procesarTransicionConDetalle(transition, buffer, read);//procesa el caracter que está en la posicion de i del string
                 result = false;           //reinicializo en false para cada iteración
                 for (int k = 0; k < acceptanceStates.size(); k++) {
-                    if (buffer.equals(acceptanceStates.get(k))) {
+                        if (buffer.equals(acceptanceStates.get(k))) {
                         result = true;                                // dice si es aceptado o no
                     }
                 }
@@ -192,20 +198,42 @@ public class AFDController extends AutomataFinito {
             }
         }
         if (type.equals("lista")) {
-            sigma.add(Sigma.charAt(0));     // LOS ARCHIVOS ACEPTADOS NO TIENEN LISTA DE
-            System.out.println(sigma.get(0));   // CARACTERES EN UNA SOLA LINEA
+            sigma.add(Sigma.charAt(0));     
+            
             sigma.add(Sigma.charAt(2));
-            System.out.println(sigma.get(1));
+           
         } else if (type.equals("intervalo")) {
             int a = (int) Sigma.charAt(0);
             int b = (int) Sigma.charAt(2);
             int i = 0;
             for (int x = a; x <= b; x++) {
                 sigma.add((char) x);
-                System.out.println(sigma.get(i));
+                
                 i++;
             }
         }
     }
+    public void generarAutomata() {
+    if(initialState.isEmpty()){
+        initialState = "q0";
+        generarSigma("a,b");
+        acceptanceStates.add("q1");
+        int quantity = 4;
+        for (int i = 0; i < quantity; i++) {
+            states.add("q" + i);
+        }
+        
+        transition = new String[states.size()][sigma.size()][1];
+        transition[0][0][0] = "q0";
+        transition[0][1][0] = "q1";
+        transition[1][0][0] = "q1";        
+        transition[1][1][0] = "q2";
+        transition[2][0][0] = "q2";
+        transition[2][1][0] = "q1";
+        transition[3][0][0] = "q2";
+        transition[3][1][0] = "q1";
+        }
+    }
+    
 // fin de Clase
 }

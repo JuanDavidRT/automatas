@@ -146,7 +146,7 @@ public class ArchivoController {
         String type = new String();
 
         for (int i = 0; i < alfabetoA.length(); i++) {
-            if (alfabetoA.charAt(i) == ',') {       // estas comas no están el los formatos admitidos
+            if (alfabetoA.charAt(i) == 32) {       
                 type = "lista";
             } else if (alfabetoA.charAt(i) == '-') {
                 type = "intervalo";

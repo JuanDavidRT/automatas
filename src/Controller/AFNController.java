@@ -47,6 +47,12 @@ public class AFNController extends AutomataFinito {
         System.out.println("Ingrese el alfabeto");
         read = sn.next();
         generarSigma(read);
+        
+        System.out.println("Ingrese la cantidad de estados");
+        quantity = sn.nextInt();
+        for (int i = 0; i < quantity; i++) {
+            states.add("q" + i);
+        }
 
         System.out.println("Ingrese el estado inicial");
         read = sn.next();
@@ -60,12 +66,7 @@ public class AFNController extends AutomataFinito {
             read = sn.next();
             acceptanceStates.add(read);
         }
-
-        System.out.println("Ingrese la cantidad de estados");
-        quantity = sn.nextInt();
-        for (int i = 0; i < quantity; i++) {
-            states.add("q" + i);
-        }
+        
         transition = new String[states.size()][sigma.size()][states.size()];
 
         System.out.println("Ingrese la función de transición");
@@ -119,18 +120,19 @@ public class AFNController extends AutomataFinito {
 
         String buffer = initialState;
         ArrayList<String> bufferList = new ArrayList();
+        ArrayList<String> bufferedList =new ArrayList();
+        bufferedList.add(initialState);
         boolean result = false;
         for (int i = 0; i < cadena.length(); i++) {  //un loop para leer la cadena de entrada
             char read = cadena.charAt(i);
-            bufferList = procesarTransicionesPosibles(transition, buffer, read);//procesa el caracter que está en la posicion de i del string
+            bufferList = procesarTransicionesPosibles(transition, bufferedList, read);//procesa el caracter que está en la posicion de i del string
             result = false;
             int limit = bufferList.size() - 1;
-            
+            bufferedList.clear();
             for (int j = 0; j < limit; j++) {
-                if (!bufferList.get(j).equals(null)) {
-                    String bufferedList = bufferList.get(j);
-                    buffer = procesarTransicion(transition,bufferedList , read);
-                  
+                if (!bufferList.get(j).equals(null)) {                   
+                    buffer = procesarTransicion(transition,bufferList.get(j) , read);
+                   bufferedList.add(buffer);
                     
                     for (int k = 0; k < acceptanceStates.size() - 1; k++) {
 
@@ -145,7 +147,7 @@ public class AFNController extends AutomataFinito {
         return result;
     }
 
-    public ArrayList<String> procesarTransicionesPosibles(String[][][] transicion, String buffer, char read) {
+    public ArrayList<String> procesarTransicionesPosibles(String[][][] transicion, ArrayList<String> buffer, char read) {
         String bufferResult = new String();
         ArrayList<String> list = new ArrayList();
         int limito = states.size() - 1;

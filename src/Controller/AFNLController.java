@@ -21,6 +21,7 @@ public class AFNLController extends AFNController {
         tran2 = automata.tran2;
     }
 
+    
     public void crearAutomata() {
 
         String read = new String();
