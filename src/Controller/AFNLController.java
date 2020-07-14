@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 import Entity.AutomataFinito;
 
-public class AFNLController extends AFNController {
+public class AFNLController extends AutomataFinito {
 
     Scanner sn = new Scanner(System.in);
 
